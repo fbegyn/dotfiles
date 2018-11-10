@@ -9,7 +9,7 @@
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files="bashrc vimrc zshrc tmux tmux.conf gitconfig xinitrc Xresources"    # list of files/folders to symlink in homedir
-configfiles="functions.sh aliases.sh exports.sh liquidpromptrc mimeapps.list z.sh redshift i3 i3status compton.conf dunst mpv git-completions.sh"
+configfiles="functions.sh aliases.sh exports.sh liquidpromptrc mimeapps.list z.sh redshift i3 i3status compton.conf dunst mpv git-completions.sh zsh"
 
 ##########
 
