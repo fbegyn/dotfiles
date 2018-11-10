@@ -1,0 +1,34 @@
+[Default Applications]
+x-scheme-handler/tg=telegramdesktop.desktop
+text/html=vivaldi-snapshot.desktop
+x-scheme-handler/http=vivaldi-snapshot.desktop
+x-scheme-handler/https=vivaldi-snapshot.desktop
+x-scheme-handler/mailto=mailspring.desktop
+message/rfc822=mailspring.desktop
+application/pdf=zathura.desktop
+x-scheme-handler/mailspring=mailspring.desktop
+x-scheme-handler/ftp=vivaldi-snapshot.desktop
+x-scheme-handler/chrome=vivaldi-snapshot.desktop
+application/x-extension-htm=vivaldi-snapshot.desktop
+application/x-extension-html=vivaldi-snapshot.desktop
+application/x-extension-shtml=vivaldi-snapshot.desktop
+application/xhtml+xml=vivaldi-snapshot.desktop
+application/x-extension-xhtml=vivaldi-snapshot.desktop
+application/x-extension-xht=vivaldi-snapshot.desktop
+x-scheme-handler/about=vivaldi-snapshot.desktop
+x-scheme-handler/unknown=vivaldi-snapshot.desktop
+
+[Added Associations]
+application/x-shellscript=gnome-disk-image-mounter.desktop;
+x-scheme-handler/mailto=thunderbird.desktop;
+message/rfc822=thunderbird.desktop;
+application/pdf=zathura-pdf-mupdf.desktop;
+text/x-go=visual-studio-code.desktop;vim.desktop;
+x-scheme-handler/http=vivaldi-snapshot.desktop;
+x-scheme-handler/https=vivaldi-snapshot.desktop;
+text/html=vivaldi-snapshot.desktop;
+application/x-partial-download=mpv.desktop;
+image/jpeg=feh.desktop;
+text/plain=visual-studio-code.desktop;vim.desktop;
+application/xml=visual-studio-code.desktop;
+application/x-php=vivaldi-stable.desktop;
