@@ -1,3 +1,7 @@
+
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -12,44 +16,15 @@ endif
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Auto pairing
-Plug 'jiangmiao/auto-pairs'
-
-" Go development in vim
-Plug 'fatih/vim-go',{'for':['go']}
-Plug 'nsf/gocode', {'for':['go'],'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'buoto/gotests-vim',{'for':['go']}
-
-" Rust developement
-Plug 'rust-lang/rust.vim',{'for':['rs']}
-Plug 'racer-rust/vim-racer',{'for':['rs']}
-
-" Pick up where you left
-Plug 'farmergreg/vim-lastplace'
-
-" Indentation guids
-Plug 'Yggdroot/indentLine'
-
-" minimal completehelp
-Plug 'maralla/completor.vim'
-
-" Python autocomplete helper
-Plug 'davidhalter/jedi-vim', { 'for':'python'}
-
-" HTML helper
-Plug 'othree/html5.vim', { 'for':'html' }
-
-" Syntax checker helper
-Plug 'w0rp/ale'
-
-" vhdl things
-Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
-
 " Better newtr
 Plug 'tpope/vim-vinegar'
 
-" R language support
-Plug 'jalvesaq/nvim-r', {'for':'R'}
+" Sublimes goto feature
+Plug 'kien/ctrlp.vim'
+
+" Project drawer
+Plug 'justinmk/vim-dirvish'
+Plug 'kristijanhusak/vim-dirvish-git'
 
 " Seamless vim panes and tmux splits
 Plug 'christoomey/vim-tmux-navigator'
@@ -61,49 +36,87 @@ Plug 'jwilm/i3-vim-focus'
 
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
+
 " Limelight
 Plug 'junegunn/limelight.vim'
 
 " Best git wrapper ever
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+" Auto pairing
+Plug 'jiangmiao/auto-pairs'
 
-" Project drawer
-Plug 'justinmk/vim-dirvish'
-Plug 'kristijanhusak/vim-dirvish-git'
+" Pick up where you left
+Plug 'farmergreg/vim-lastplace'
 
-" Snippet support
-Plug 'SirVer/ultisnips'
+" Indentation guids
+Plug 'Yggdroot/indentLine'
 
-" Sublimes goto feature
-Plug 'kien/ctrlp.vim'
+"" Better Whitespacejkk
+Plug 'ntpeters/vim-better-whitespace'"
+
+" deoplete plugin stuff
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Ultisnips
 Plug 'sirver/ultisnips'
 
-" Some more sublime emulation
-Plug 'gcmt/breeze.vim'
-Plug 'tpope/vim-surround'
+" Combin/ keypresses
+Plug 'kana/vim-arpeggio'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Languages
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Syntax checker helper
+Plug 'w0rp/ale'
+
+"" Vim Go
+Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}"
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'buoto/gotests-vim',{'for':['go']}
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+
+" Rust developement
+Plug 'rust-lang/rust.vim',{'for':['rs']}
+Plug 'racer-rust/vim-racer',{'for':['rs']}
+
+" Python autocomplete helper
+Plug 'davidhalter/jedi-vim', { 'for':'python'}
+
+"" Vim JSON
+Plug 'elzr/vim-json'
+
+" HTML helper
+Plug 'othree/html5.vim', { 'for':['html','htm'] }
+
+" vhdl things
+Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 
 " Ledger file syntax support
 Plug 'ledger/vim-ledger',{'for':['journal']}
 
-" Combin/ keypresses
-Plug 'kana/vim-arpeggio'
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM theme
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 
 call plug#end()
-call arpeggio#load()  
+call arpeggio#load()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Start configuration
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Get the defaults that most users want.
-source $VIMRUNTIME/defaults.vim
+"source $VIMRUNTIME/defaults.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -118,6 +131,10 @@ filetype indent on
 " More natural screen splitting
 "set splitbelow
 set splitright
+
+set mouse=a
+
+set colorcolumn=81
 
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
@@ -135,7 +152,7 @@ vnoremap <C-V>     v
 
 " Omnicomplete options
 set omnifunc=syntaxcomplete#Complete
-set shortmess+=c 
+set shortmess+=c
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
@@ -155,7 +172,7 @@ set ttimeout
 set ttimeoutlen=50
 
 " Clipboard settings
-set clipboard=namedplus
+set clipboard=unnamedplus
 
 " Disable backward compatability
 set nocompatible
@@ -178,7 +195,7 @@ Arpeggio map wq :wq<cr>
 nnoremap <leader>qq :qa!<cr>
 nnoremap <leader>q :q!<cr>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 "
@@ -253,14 +270,14 @@ nnoremap <silent> N   N:call HLNext(0.4)<cr>
 " highlight the match in red...
 highlight WhiteOnRed ctermbg=red
 function! HLNext (blinktime)
-    let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-    let target_pat = '\c\%#\%('.@/.'\)'
-    let ring = matchadd('WhiteOnRed', target_pat, 101)
-    redraw
-    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    call matchdelete(ring)
-    redraw
+  let [bufnum, lnum, col, off] = getpos('.')
+  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+  let target_pat = '\c\%#\%('.@/.'\)'
+  let ring = matchadd('WhiteOnRed', target_pat, 101)
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  call matchdelete(ring)
+  redraw
 endfunction
 
 " Makes search act like search in modern browsers
@@ -303,7 +320,7 @@ map Q gq
 " Background color
 set background=dark
 
-" Colorscheme 
+" Colorscheme
 colorscheme PaperColor
 
 " set column border in color
@@ -544,6 +561,14 @@ let g:completor_tex_omni_trigger =
         \  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
         \  .')'
 
+""""""""""""""""""""""""""""""""""""""""""""""
+" Deoplete
+"""""""""""""""""""""""""""""""""""""""""""""""
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+\'auto_complete_delay': 50,
+\'smart_case': v:true,
+\})
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " CtrlP
@@ -589,7 +614,7 @@ let g:go_fmt_command = "goimports"
 let g:go_auto_type = 1
 let g:go_template_autocreate = 0
 let g:go_gocode_unimported_packages = 1
-let g:go_bin_path= "/home/francis/Go/bin" 
+let g:go_bin_path= "/home/francis/Go/bin"
 
 nnoremap <leader>gt :GoTest<cr>
 nnoremap <leader>gs :GoFillStruct<cr>
@@ -632,45 +657,45 @@ endfunction
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
+  let l:currentBufNum = bufnr("%")
+  let l:alternateBufNum = bufnr("#")
 
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
+  if buflisted(l:alternateBufNum)
+    buffer #
+  else
+    bnext
+  endif
 
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
+  if bufnr("%") == l:currentBufNum
+    new
+  endif
 
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
+  if buflisted(l:currentBufNum)
+    execute("bdelete! ".l:currentBufNum)
+  endif
 endfunction
 
 function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
+  exe "menu Foo.Bar :" . a:str
+  emenu Foo.Bar
+  unmenu Foo
 endfunction
 
 function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
+  let l:saved_reg = @"
+  execute "normal! vgvy"
 
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
+  let l:pattern = escape(@", "\\/.*'$^~[]")
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
+  if a:direction == 'gv'
+      call CmdLine("Ack '" . l:pattern . "' " )
+  elseif a:direction == 'replace'
+      call CmdLine("%s" . '/'. l:pattern . '/')
+  endif
 
-    let @/ = l:pattern
-    let @" = l:saved_reg
+  let @/ = l:pattern
+  let @" = l:saved_reg
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
