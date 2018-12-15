@@ -22,6 +22,9 @@ alias pamir='yay -Syy'
 #alias ll='exa -l'
 #alias la='exa -a'
 
+alias vim='nvim'
+alias vi='nvim'
+
 alias vivado='/opt/Xilinx/Vivado/2018.2/bin/vivado'
 
 # Open another terminal in the same location
@@ -61,9 +64,7 @@ alias 'ta'='tmux attach -t'
 alias light='brightnessctl'
 
 # vim, but then sudoes
-alias svim='sudo -E vim'
-alias lvim='vim $LEDG'
-alias lfava='fava $LEDG'
+alias svim='sudo -E nvim'
 
 alias hackerslides='docker run -it -e USER=francis -e PASSWDORD=slides -p 8080:8080 -v $(pwd)/slides:/app/slides msoedov/hacker-slides'
 alias kali='docker run -it kalilinux/kali-linux-docker'
@@ -71,5 +72,7 @@ alias influx='docker run -it influxdb bash'
 
 alias pidfind='ps aux | fzf'
 
-alias hoekmusic='ncmpcpp -h 10.0.05 -p 6600'
-alias plaympd='pax11publish -e -S'
+alias hoekmusic='ncmpcpp -h 10.0.0.5 -p 6600'
+alias remotesound='pax11publish -e -S'
+alias localsound='pax11publish -e -r'
+
