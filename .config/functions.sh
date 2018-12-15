@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Upload file to 0x0
 fup() {
     curl -F"file=@$1" http://0x0.st;
@@ -11,7 +12,7 @@ cheat(){
 
 # forecast
 weather () {
-    curl wttr.in/"$1";
+    curl https://wttr.in/"$1";
 }
 
 # Quickly copy file to clipboard
@@ -52,9 +53,9 @@ wifirssi(){
   iw dev $1 scan | egrep "SSID|signal" | awk -F ":" '{print $2}' | sed 'N;s/\n/:/' | sort
 }
 
-#workon(){
-#  source "$HOME/.virtualenvs/$1/bin/activate"
-#}
+workon(){
+  source "$HOME/.virtualenvs/$1/bin/activate"
+}
 
 ips ()
 {
@@ -177,4 +178,19 @@ git_info() {
   else
 		echo "you're currently not in a git repository"
 	fi
+}
+
+countdown(){
+	date1=$((`date +%s` + $1));
+	while [ "$date1" -ge `date +%s`  ]; do
+		echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+		sleep 0.1
+	done
+}
+stopwatch(){
+	date1=`date +%s`;
+	while true; do
+		echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+		sleep 0.1
+	done
 }
