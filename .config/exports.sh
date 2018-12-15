@@ -3,11 +3,16 @@
 export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
-export BROWSER='vivaldi-snapshot'
+export BROWSER='qutebrowser'
 
+# Pandoc template home
 export TEXINPUTS=~/.pandoc/templates:$TEXINPUTS
 
+# home for python virtualenvs
 export WORKON_HOME=~/.virtualenvs
+
+# Faster zsh vi mode
+export KEYTIMEOUT=2
 
 # vimrc file
 export MYVIMRC='/home/francis/.vimrc'
