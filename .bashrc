@@ -10,3 +10,5 @@ source ~/.config/liquidprompt/liquidprompt
 # Syntax highlighting
 # Git completions
 . ~/.config/git-completions.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
