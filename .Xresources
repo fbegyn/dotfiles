@@ -1,7 +1,7 @@
 ! Aesthetics !
 #include "/home/francis/.config/nord-xresources/src/nord"
 
-URxt.background: rgba:0000/0000/0200/c200
+URxvt.background: rgba:0000/0000/0200/c200
 
 ! Fonts and stuff !
 URxvt.font: xft:Dina,xft:Symbola
