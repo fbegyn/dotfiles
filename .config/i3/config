@@ -16,11 +16,17 @@ set $mod Mod4
 font pango:monospace 8
 
 # Set the default gaps size for windows
-gaps inner 5
-gaps outer 2
+gaps inner 1
+gaps outer 1
 
 # Only do gaps when more then 1 container is on the workspace
 smart_gaps on
+
+# Disable the annoying titlebars
+default_border pixel 2
+default_floating_border pixel 3
+# Hide border if only 1 window
+hide_edge_borders smart
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -145,6 +151,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
+set $size_step 2 px or 2 ppt
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -152,16 +159,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym j resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width $size_step
+        bindsym k resize grow height $size_step
+        bindsym j resize shrink height $size_step
+        bindsym l resize grow width $size_step
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width $size_step
+        bindsym Down resize grow height $size_step
+        bindsym Up resize shrink height $size_step
+        bindsym Right resize grow width $size_step
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -173,7 +180,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+				font pango:DejaVu Sans Mono, FontAwesome 9
+        status_command /usr/bin/i3status-rs ~/.config/i3status-rs/config.toml
         position top
         mode hide
         hidden_state hide
@@ -189,7 +197,7 @@ mode "$mode_system" {
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -199,12 +207,14 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 
 # Screenshot menu
-set $screen_grab (s) selection, (f) Fullscreen screenshot, (w) window
+set $screen_grab s/f imgur, Shift+s/f local, Alt+s/f clip
 mode "$screen_grab" {
-    bindsym s exec "maim -s | xclip -selection clipboard -t image/png", mode "default"
+    bindsym s exec "maim -s | ~/Scripts/imgur.sh", mode "default"
     bindsym Shift+s exec "maim -s ~/Pictures/Screenshots/$(date +%F-%T).png", mode "default"
-    bindsym f exec "maim | xclip -selection clipboard -t image/png", mode "default"
+    bindsym Mod1+s exec "maim -s | xclip -selection clipboard -t image/png", mode "default"
+    bindsym f exec "maim | ~/Scripts/imgur.sh", mode "default"
     bindsym Shift+f exec "maim ~/Pictures/Screenshots/$(date +%F-%T).png", mode "default"
+    bindsym Mod1+f exec "maim | xclip -selection clipboard -t image/png", mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -217,28 +227,24 @@ bindsym $mod+grave --release mode "$screen_grab"
 bindsym $mod+Shift+s sticky toggle
 
 # Tiny sticky window
-bindsym $mod+y floating toggle; resize set 526 300; sticky toggle; move window to position 1389 5
+bindsym $mod+y floating enable; resize set 320 200; sticky toggle; move window to position 1389 5
 
 # Immediately play youtube from rofi output
-bindsym --release $mod+p exec /home/francis/Scripts/youtubeplayer.sh
+bindsym --release $mod+p exec rofi-pass
 
-# Disable the annoying titlebars
-new_window none
-new_float pixel 1
 
 # Execute and startup some fun programs
 exec --no-startup-id /usr/bin/i3lock -c 000000
-exec --no-startup-id redshift
-#exec --no-startup-id nm-applet
+#exec --no-startup-id redshift exec --no-startup-id nm-applet
 exec --no-startup-id dunst
-exec --no-startup-id udiskie
+#exec --no-startup-id udiskie
 exec_always --no-startup-id ~/.fehbg
 #exec --no-startup-id lxsession
 exec --no-startup-id xset b off
-#exec_always --no-startup-id libinput-gestures-setup start
+exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id exec compton
 #exec --no-startup-id /home/francis/Scripts/monitor-toggle.sh
-#exec --no-startup-id wpa_cli -a /home/francis/Scripts/wpa_connection.sh
+exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
 
 # Reload monitor config
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
@@ -263,8 +269,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Brightness control
-bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl s 5%+
+bindsym XF86MonBrightnessDown exec /home/francis/Scripts/brightness down
+bindsym XF86MonBrightnessUp exec /home/francis/Scripts/brightness up
 
 # Bind wifi switching script
 bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
@@ -276,7 +282,7 @@ bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 
 # ncmpcpp scratchpad
 #for_window [instance="mpdscratchpad"] move to scratchpad, border 1pixel
-#bindsym mod4+Shift+m [instance="mpdscratchpad"] scratchpad show
+#bindsym mod4+Shift+b [instance="mpdscratchpad"] scratchpad show
 #exec $terminal --class 'mpdscratchpad' -t 'mpdscratchpad' -e ncmpcpp
 
 # Ranger scratchpad
@@ -287,8 +293,13 @@ bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 # Autoswitch workspaces
 workspace_auto_back_and_forth yes
 
+# auto set workspaces
+#exec --no-startup-id i3-msg "workspace $workspace1; append_layout /home/francis/.config/i3/workspaces/web.json"
+#exec --no-startup-id $terminal --class 'web_terminal' -t web_terminal -e tmux
+
 # Autostart programs
-exec --no-startup-id vivaldi-snapshot
+#exec --no-startup-id vivaldi-snapshot
+exec --no-startup-id qutebrowser
 #exec --no-startup-id slack
 #exec --no-startup-id rambox
 #exec --no-startup-id telegram-desktop
@@ -303,9 +314,13 @@ assign [class="Telegram"] $workspace2
 assign [class="Thunderbird"] $workspace3
 assign [class="Mailspring"] $workspace3
 assign [class="Vivaldi-stable"] $workspace1
+assign [class="qutebrowser"] $workspace1
 assign [class="Firefox"] $workspace1
 assign [class="Spotify"] $workspace4
 for_window [class="Spotify"] move to workspace $workspace4
+
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Nautilus"] floating enable
 
 # Volume scratchpad
 for_window [instance="volume"] move to scratchpad, border 1pixel
