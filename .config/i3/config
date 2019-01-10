@@ -188,14 +188,15 @@ bar {
 }
 
 # Set the locker variable
-set $locker /usr/bin/slock
+set $locker /usr/bin/i3lock -c 000000
 
 #System menu
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
+set $mode_system System (l)lock,(e)logout,(s)freeze,(r)reboot,(h)susp to disk,(Shift+s)shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
@@ -227,15 +228,17 @@ bindsym $mod+grave --release mode "$screen_grab"
 bindsym $mod+Shift+s sticky toggle
 
 # Tiny sticky window
-bindsym $mod+y floating enable; resize set 320 200; sticky toggle; move window to position 1389 5
+bindsym $mod+y floating toggle; resize set 320 200; sticky toggle; move window to position 1600 5;
+for_window [title="yt-player"] floating_minimum_size 320x200; floating_maximum_size 320x200;
 
 # Immediately play youtube from rofi output
 bindsym --release $mod+p exec rofi-pass
 
 
 # Execute and startup some fun programs
-exec --no-startup-id /usr/bin/i3lock -c 000000
-#exec --no-startup-id redshift exec --no-startup-id nm-applet
+exec --no-startup-id $locker
+exec --no-startup-id redshift
+#exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 #exec --no-startup-id udiskie
 exec_always --no-startup-id ~/.fehbg
@@ -315,14 +318,20 @@ assign [class="Thunderbird"] $workspace3
 assign [class="Mailspring"] $workspace3
 assign [class="Vivaldi-stable"] $workspace1
 assign [class="qutebrowser"] $workspace1
-assign [class="Firefox"] $workspace1
+#assign [class="Firefox"] $workspace1
 assign [class="Spotify"] $workspace4
 for_window [class="Spotify"] move to workspace $workspace4
 
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Nautilus"] floating enable
+for_window [class="Blueberry.py"] floating enable
 
 # Volume scratchpad
 for_window [instance="volume"] move to scratchpad, border 1pixel
 bindsym mod4+Shift+v [instance="volume"] scratchpad show
-exec $terminal --class 'volume' -t file_scratchpad -e pulsemixer
+exec $terminal --class 'volume' -t volume_scratchpad -e pulsemixer
+
+# irssi scratchpad
+for_window [instance="irssi"] move to scratchpad, border 1pixel
+bindsym mod4+Shift+i [instance="irssi"] scratchpad show
+exec $terminal --class 'irssi' -t irssi_scratchpad -e irssi
