@@ -43,4 +43,4 @@ export DEBFULLNAME='Francis Begyn'
 export DEBEMAIL='francis.begyn@gmail.com'
 
 # Ledger files
-export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2018.journal
+export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2019.journal

@@ -75,4 +75,5 @@ alias pidfind='ps aux | fzf'
 alias hoekmusic='ncmpcpp -h 10.0.0.5 -p 6600'
 alias remotesound='pax11publish -e -S'
 alias localsound='pax11publish -e -r'
-
+alias hoekvol='PULSE_SERVER=10.0.0.5 pavucontrol'
+alias hoekpulse='PULSE_SERVER=10.0.0.5'

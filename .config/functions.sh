@@ -53,10 +53,6 @@ wifirssi(){
   iw dev $1 scan | egrep "SSID|signal" | awk -F ":" '{print $2}' | sed 'N;s/\n/:/' | sort
 }
 
-workon(){
-  source "$HOME/.virtualenvs/$1/bin/activate"
-}
-
 ips ()
 {
     if command -v ifconfig &>/dev/null
