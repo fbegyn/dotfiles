@@ -4,6 +4,7 @@ export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='less'
 export BROWSER='qutebrowser'
+export TERMINAL='alacritty'
 
 # Pandoc template home
 export TEXINPUTS=~/.pandoc/templates:$TEXINPUTS
