@@ -28,11 +28,11 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Helpers
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
@@ -43,8 +43,7 @@ let g:ale_completion_enabled = 1
 Plug 'w0rp/ale'
 
 " Theme
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 
@@ -320,12 +319,6 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Limelight
-augroup goyo
-  autocmd! User GoyoEnter Limelight
-  autocmd! User GoyoLeave Limelight!
-augroup end
-
 " VIMUX
 " Prompt for a command to run
 map <Leader>vp :VimuxPromptCommand<CR>
@@ -366,6 +359,17 @@ let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
+" => goyo
+nnoremap <leader>f :Goyo<cr>
+let g:goyo_width = 100
+let g:goyo_height = 100
+let g:goyo_linenr = 1
+
+augroup Goyo
+  autocmd! User GoyoEnter Limelight
+  autocmd! User GoyoLeave Limelight!
+augroup end
+
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
@@ -384,15 +388,8 @@ xmap <C-k>    <Plug>(neosnippet_expand_target)
 
 " ale
 let g:ale_linters_explicit = 1
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
 " Enable completion where available.
 let g:ale_completion_enabled = 0
-
-" => Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='one'
-let g:airline_powerline_fonts = 1
 
 " => IndentLine
 let g:indentLine_char = '┆'
@@ -428,12 +425,6 @@ Arpeggio map gs :Gstatus<cr>
 Arpeggio map gb :Gblame<cr>
 Arpeggio map gc :Gcommit<cr>a
 Arpeggio map gd :Gdiff<cr>a
-
-" => goyo
-nnoremap <leader>f :Goyo<cr>
-let g:goyo_width = 100
-let g:goyo_height = 100
-let g:goyo_linenr = 1
 
 " hledger
 
@@ -475,3 +466,4 @@ highlight DiffText   cterm=none ctermfg=11 ctermbg=none gui=none guifg=bg guibg=
 set background=dark
 " Colorscheme
 colorscheme PaperColor
+
