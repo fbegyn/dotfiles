@@ -90,7 +90,7 @@ set nowritebackup
 set noerrorbells
 set updatetime=250
 
-set colorcolumn=80
+set colorcolumn=120
 
 set number
 set numberwidth=2
@@ -178,9 +178,6 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 12
 Arpeggio nnoremap fe :Lex<cr>
-
-" set column border in color
-highlight ColorColumn ctermbg=blue
 
 " Enable syntax highlighting
 syntax on
@@ -278,8 +275,6 @@ augroup pickup
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup end
 
-" Always show the status line
-" set laststatus=1
 " => Editing mappings
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -303,12 +298,6 @@ map <leader>s? z=
 " => Misc
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scribble
-" map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
@@ -442,8 +431,8 @@ Arpeggio map gd :Gdiff<cr>a
 
 " => goyo
 nnoremap <leader>f :Goyo<cr>
-let g:goyo_width = 80
-let g:goyo_height = 90
+let g:goyo_width = 100
+let g:goyo_height = 100
 let g:goyo_linenr = 1
 
 " hledger
