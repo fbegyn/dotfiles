@@ -6,12 +6,8 @@
 
 ########## Variables
 
-dir=~/dotfiles                    # dotfiles directory
-olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc zshrc tmux tmux.conf gitconfig xinitrc Xresources"    # list of files/folders to symlink in homedir
-configfiles="functions.sh aliases.sh exports.sh liquidpromptrc mimeapps.list z.sh redshift i3 i3status compton.conf dunst mpv git-completions.sh zsh"
-
-##########
+dir=$HOME/dotfiles                    # dotfiles directory
+olddir=$HOME/dotfiles_old             # old dotfiles backup directory
 
 # create dotfiles_old in homedir
 echo "Creating $olddir for backup of any existing dotfiles in ~"
@@ -23,18 +19,33 @@ echo "Changing to the $dir directory"
 cd $dir
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
-for file in $files; do
-  echo "Moving any existing dotfiles from ~ to $olddir"
-  mv ~/.$file ~/dotfiles_old/
-  echo "Creating symlink to $file in home directory."
-  ln -s $dir/.$file ~/.$file
-done
-
-# do the same for the .config files
-for file in $configfiles; do
-  echo "Backing up existing files in .config"
-  mv ~/.config/$file ~/dotfiles_old/.config/
-  echo "Creating symlink to $file in ~/.config directory."
-  ln -s $dir/.config/$file ~/.config/$file
+files=${PWD}/
+for f in ./.*; do
+  if [ $f == "./." ] || [ $f == "./.." ] || [ $f == "./.git" ]; then
+    continue
+  fi
+  FILE=${f##*/}
+  if [ $FILE == ".config" ]; then
+    for fc in ./.config/*; do
+      FILE=${fc##*/}
+      echo "Processing ~/.config/$FILE"
+      if [ -f "$HOME/.config/$FILE" ] || [ -d "$HOME/.config/$FILE" ]; then
+        echo "Backing up $HOME/.config/$FILE"
+        mv "$HOME/.config/$FILE" "$olddir/.config/" || exit 1
+      fi
+      echo "Creating symlink to $dir/.config/$FILE in ~/.config/$FILE"
+      ln -s "$dir/.config/$FILE" "$HOME/.config/$FILE" || exit 1
+      printf ".config/$FILE done\n\n"
+    done
+  else
+    echo "Processing ~/$FILE"
+    if [ -f "$HOME/$FILE" ] || [ -d "$HOME/$FILE" ]; then
+      echo "Backing up $HOME/$FILE"
+      mv "$HOME/$FILE" "$olddir/" || exit 1
+    fi
+    echo "$dir/$FILE"
+    echo "Creating symlink to $dir/$FILE in ~/"
+    ln -s "$dir/$FILE" "$HOME/$FILE" || exit 1
+    printf "$FILE done\n\n"
+  fi
 done
