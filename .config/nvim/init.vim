@@ -158,10 +158,6 @@ Arpeggio inoremap jk <ESC>
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
-" Better search
-" This rewires n and N to do the highlighing...
-nnoremap <silent> n   n:call HLNext(0.4)<cr>
-nnoremap <silent> N   N:call HLNext(0.4)<cr>
 " Makes search act like search in modern browsers
 set incsearch
 " For regular expressions turn magic on
@@ -171,7 +167,6 @@ set showmatch
 " How many tenths of a second to blink when matching brackets
 set matchtime=4
 " No annoying sound on errors
-set noerrorbells
 set novisualbell
 set t_vb=
 set timeoutlen=500
@@ -186,7 +181,6 @@ Arpeggio nnoremap fe :Lex<cr>
 
 " set column border in color
 highlight ColorColumn ctermbg=blue
-"call matchadd('ColorColumn', '\%81v', 100)
 
 " Enable syntax highlighting
 syntax on
@@ -214,7 +208,7 @@ set shiftwidth=2
 set tabstop=2
 " Linebreak on 500 characters
 set linebreak
-set textwidth=130
+"set textwidth=130
 set smartindent "Smart indent
 set wrap "Wrap lines
 
@@ -422,9 +416,11 @@ let g:go_template_autocreate = 0
 let g:go_gocode_unimported_packages = 1
 let g:go_bin_path= '/home/francis/Go/bin'
 
-nnoremap <leader>gt :GoTest<cr>
-nnoremap <leader>gs :GoFillStruct<cr>
-nnoremap <leader>gf :GoFmt
+augroup Golang
+  autocmd FileType go nnoremap <leader>gt :GoTest<cr>
+  autocmd FileType go nnoremap <leader>gs :GoFillStruct<cr>
+  autocmd FileType go nnoremap <leader>gf :GoFmt
+augroup end
 
 " => Rust
 augroup rustfmt
