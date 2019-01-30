@@ -101,7 +101,8 @@ c.url.default_page = 'https://wttr.in'
 # `:open google qutebrowser`.
 # Type: Dict
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
-        'gmaps':'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov': 'https://www.imdb.com/find?q={}&s=all', 'map': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}'}
+        'gmaps':'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov':
+        'https://www.imdb.com/find?q={}&s=all', 'maps': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}'}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
@@ -114,8 +115,9 @@ c.colors.webpage.bg = 'white'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
-config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecast.sh "{hint-url}"')
-config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh "{hint-url}"')
+config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecast.sh queue "{hint-url}"')
+config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
+config.bind('<Ctrl+Shift+v>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
 
 # Bindings for command mode
 config.bind('<Ctrl+j>', 'completion-item-focus next', mode='command')
