@@ -48,6 +48,9 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 
 " Languages
+""Plug 'vim-pandoc/vim-pandoc'
+""Plug 'vim-pandoc/vim-pandoc-syntax'
+""Plug 'lervag/vimtex'
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'benmills/vimux-golang'
@@ -239,8 +242,8 @@ map <C-l>     <C-W>l
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
 " Close all the buffers
 map <leader>ba :bufdo bd<cr>
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+map <leader>j :bnext<cr>
+map <leader>k :bprevious<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
