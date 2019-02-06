@@ -44,7 +44,7 @@ c.downloads.location.directory = '/home/francis/Downloads'
 # Duration (in milliseconds) to wait before removing finished downloads.
 # If set to -1, downloads are never removed.
 # Type: Int
-c.downloads.remove_finished = -1
+c.downloads.remove_finished = 10000
 
 # Enable smooth scrolling for web pages. Note smooth scrolling does not
 # work with the `:scroll-px` command.
@@ -79,12 +79,12 @@ c.tabs.show = 'multiple'
 #   - left
 #   - right
 #   - center
-c.tabs.title.alignment = 'center'
+c.tabs.title.alignment = 'left'
 
 # Width (in pixels or as percentage of the window) of the tab bar if
 # it's vertical.
 # Type: PercOrInt
-c.tabs.width = '4%'
+c.tabs.width = '7%'
 
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
@@ -100,9 +100,7 @@ c.url.default_page = 'https://wttr.in'
 # used by prepending the search engine name to the search term, e.g.
 # `:open google qutebrowser`.
 # Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
-        'gmaps':'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov':
-        'https://www.imdb.com/find?q={}&s=all', 'maps': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}'}
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}', 'gmaps': 'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov': 'https://www.imdb.com/find?q={}&s=all', 'maps': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}'}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
@@ -116,8 +114,8 @@ c.colors.webpage.bg = 'white'
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
 config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecast.sh queue "{hint-url}"')
-config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
 config.bind('<Ctrl+Shift+v>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
+config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
 
 # Bindings for command mode
 config.bind('<Ctrl+j>', 'completion-item-focus next', mode='command')
