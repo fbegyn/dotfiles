@@ -20,43 +20,41 @@ Plug 'Yggdroot/indentLine'
 Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-vinegar'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+""if has('nvim')
+""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+""else
+""  Plug 'Shougo/deoplete.nvim'
+""  Plug 'roxma/nvim-yarp'
+""  Plug 'roxma/vim-hug-neovim-rpc'
+""endif
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-jedi'
+Plug 'roxma/nvim-yarp'
+
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
 " Helpers
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
-Plug 'farmergreg/vim-lastplace'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'kana/vim-arpeggio'
-Plug 'junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-let g:ale_completion_enabled = 1
 Plug 'w0rp/ale'
 
 " Theme
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'rakr/vim-one'
 
 " Languages
-""Plug 'vim-pandoc/vim-pandoc'
-""Plug 'vim-pandoc/vim-pandoc-syntax'
-""Plug 'lervag/vimtex'
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'benmills/vimux-golang'
 Plug 'buoto/gotests-vim',{'for':['go']}
 Plug 'rust-lang/rust.vim',{'for':['rs']}
-"Plug 'racer-rust/vim-racer',{'for':['rs']}
 Plug 'stevearc/vim-arduino', { 'for': 'ino' }
 Plug 'davidhalter/jedi-vim', { 'for':'python'}
 Plug 'pangloss/vim-javascript',{ 'for' : ['js']}
@@ -64,20 +62,17 @@ Plug 'elzr/vim-json',{ 'for' : ['json']}
 Plug 'othree/html5.vim', { 'for':['html','htm'] }
 Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 Plug 'ledger/vim-ledger',{'for':['journal']}
-
+Plug 'lervag/vimtex',{'for':['latex','tex']}
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let g:mapleader = ','
 
-call arpeggio#load()
-
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 
 set history=500
-set clipboard=unnamed
 set showmode
 set lazyredraw
 set hidden
@@ -91,8 +86,13 @@ set nobackup
 set nowritebackup
 set noerrorbells
 set updatetime=250
+set smartindent "Smart indent
 
-set colorcolumn=120
+" Linebreak on 111 characters
+set textwidth=111
+set colorcolumn=110
+set linebreak
+set wrap "Wrap lines
 
 set number
 set numberwidth=2
@@ -106,20 +106,16 @@ set fileformat=unix
 set whichwrap+=<,>,h,l
 set wildignore+=.*,.git,*.swp,*pyc,*pyo,*.png,*.jpg,*.gif,*.ai,*.jpeg,*.psd,*.jar,*.zip,*.gem,log/**,tmp/**,coverage/**,rdoc/**,output_*,*.xpi,doc/**
 
-set omnifunc=syntaxcomplete#Complete
-set completeopt-=preview
-set completeopt+=noinsert
+" Autcompletion
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
 
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
-
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-
-" vv and vh to generate new faster plits
-Arpeggio map sv :vsp<cr>
-Arpeggio map sh :sp<cr>
 
 " Some key rebindings
 " Block mode is more usefull then visual
@@ -128,46 +124,45 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
-set autoindent
-set showmode
 " Number sytem for c-a and c-x incrementation/decrementation
 set nrformats-=octal
+
 " Rounds to indent to multiples of shiftwidth
 set shiftround
+set shiftwidth=2
+set tabstop=2
+" Use spaces instead of tabs
+set expandtab
+
 " timeout for combination of keys before considered sime key strokes
 set ttimeout
-set ttimeoutlen=55
-" Automatically write file when making programs
-set autowrite
+set ttimeoutlen=60
+
 " Fast saving
 nmap <leader>w :w!<cr>
-Arpeggio map wq :wq<cr>
 " Fast exiting
 nnoremap <leader>qq :qa!<cr>
 nnoremap <leader>q :q!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
-"
-" Set 3 lines to the cursor - when moving vertically using j/k
-set scrolloff=3
+
+" exit insert mode
+inoremap <C-c> <Esc>
+
+" Set x lines to the cursor - when moving vertically using j/k
+set scrolloff=4
 
 " Height of the command bar
 set cmdheight=2
-" exit insert mode
-inoremap <C-c> <Esc>
-Arpeggio inoremap jk <ESC>
+
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
+
 " Makes search act like search in modern browsers
 set incsearch
-" For regular expressions turn magic on
-set magic
-" Show matching brackets when text indicator is over them
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set matchtime=4
+
 " No annoying sound on errors
 set novisualbell
 set t_vb=
@@ -179,7 +174,6 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 12
-Arpeggio nnoremap fe :Lex<cr>
 
 " Enable syntax highlighting
 syntax on
@@ -195,22 +189,6 @@ endif
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
 
-" => Files, backups and undo
-set titlestring=VIM
-" => Text, tab and indent related
-" Use spaces instead of tabs
-set expandtab
-" Be smart when using tabs ;)
-set smarttab
-" 1 tab == 4 spaces
-set shiftwidth=2
-set tabstop=2
-" Linebreak on 500 characters
-set linebreak
-"set textwidth=130
-set smartindent "Smart indent
-set wrap "Wrap lines
-
 " => Vimdiff
 nnoremap <leader>dr :diffget RE<cr>
 nnoremap <leader>dl :diffget LO<cr>
@@ -219,8 +197,8 @@ nnoremap <leader>db :diffget BA<cr>
 " => Visual mode related
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
 " => Moving around, tabs, windows and buffers
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
@@ -272,11 +250,6 @@ try
 catch
 endtry
 
-" Return to last edit position when opening files (You want this!)
-augroup pickup
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-augroup end
-
 " => Editing mappings
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -290,38 +263,14 @@ vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 " => Spell checking
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
-hi SpellBad ctermfg=none ctermbg=4 guibg=Red
+hi SpellBad ctermfg=none ctermbg=4 guibg=Lime
 " Shortcuts using <leader>
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-" => Misc
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
 " Plugins config
-" fzf.vim
-" nnoremap <C-[> :Files<cr>
-let g:fzf_layout = { 'right': '~20%' }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
 " VIMUX
 " Prompt for a command to run
 map <Leader>vp :VimuxPromptCommand<CR>
@@ -333,11 +282,12 @@ map <Leader>vi :VimuxInspectRunner<CR>
 map <Leader>vz :VimuxZoomRunner<CR>
 
 " Language server
+let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hasSnippetSupport = 0
 let g:LanguageClient_hoverPreview = 'Never'
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'python': ['/usr/bin/pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'php': ['/usr/bin/php-language-server'],
     \ 'go' : ['/home/francis/Go/bin/go-langserver','-gocodecompletion','-func-snippet-enabled', 'false'],
@@ -350,6 +300,7 @@ let g:LanguageClient_serverCommands = {
 \}
 nnoremap <F7> :call LanguageClient_contextMenu()<CR>
 noremap <leader>rn :call LanguageClient#textDocument_rename()<CR>
+call ncm2#override_source('LanguageClient_python', {'enable': 0})
 
 let g:multi_cursor_use_default_mapping=0
 " Default mapping
@@ -375,6 +326,7 @@ augroup end
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 500
 
 " deoplete + neosnippet + autopairs changes
 let g:AutoPairsMapCR=0
@@ -405,7 +357,7 @@ let g:go_template_autocreate = 0
 let g:go_gocode_unimported_packages = 1
 let g:go_bin_path= '/home/francis/Go/bin'
 
-augroup Golang
+augroup golang
   autocmd FileType go nnoremap <leader>gt :GoTest<cr>
   autocmd FileType go nnoremap <leader>gs :GoFillStruct<cr>
   autocmd FileType go nnoremap <leader>gf :GoFmt
@@ -424,13 +376,8 @@ let g:javascript_plugin_ngdoc = 1
 " => Git
 set statusline+=%{fugitive#statusline()}
 set signcolumn=yes
-Arpeggio map gs :Gstatus<cr>
-Arpeggio map gb :Gblame<cr>
-Arpeggio map gc :Gcommit<cr>a
-Arpeggio map gd :Gdiff<cr>a
 
 " hledger
-
 " => Helper functions
 " Returns true if paste mode is enabled
 function! HasPaste()
@@ -441,19 +388,10 @@ function! HasPaste()
 endfunction
 
 " Basic shortcuts definitions
-"  most in visual mode / selection (v or ⇧ v)
-" indent / deindent after selecting the text with (⇧ v), (.) to repeat.
-vnoremap <Tab> >
-vnoremap <S-Tab> <
 " comment / decomment & normal comment behavior
 vmap <C-m> gc
 " Disable tComment to escape some entities
 let g:tcomment#replacements_xml={}
-
-" Text wrap simpler, then type the open tag or ',"
-vmap <C-w> S
-" lazy ':'
-map \ :
 
 nnoremap <Leader>p :set paste<CR>
 nnoremap <Leader>o :set nopaste<CR>
@@ -470,3 +408,63 @@ set background=dark
 " Colorscheme
 colorscheme PaperColor
 
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+" NCM2 with latex
+au Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-cmds',
+        \ 'priority': 8,
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'prefix', 'key': 'word'},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+    au Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-labels',
+        \ 'priority': 8,
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'substr', 'key': 'word'},
+        \               {'name': 'substr', 'key': 'menu'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#labels,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+    au Filetype tex call ncm2#register_source({
+        \ 'name' : 'vimtex-files',
+        \ 'priority': 8,
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'abbrfuzzy', 'key': 'word'},
+        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#files,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
+    au Filetype tex call ncm2#register_source({
+        \ 'name' : 'bibtex',
+        \ 'priority': 8,
+        \ 'complete_length': -1,
+        \ 'scope': ['tex'],
+        \ 'matcher': {'name': 'combine',
+        \             'matchers': [
+        \               {'name': 'prefix', 'key': 'word'},
+        \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+        \               {'name': 'abbrfuzzy', 'key': 'menu'},
+        \             ]},
+        \ 'word_pattern': '\w+',
+        \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
+        \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+        \ })
