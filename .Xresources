@@ -4,7 +4,7 @@
 URxvt.background: rgba:0000/0000/0200/c200
 
 ! Fonts and stuff !
-URxvt.font: xft:Dina,xft:Symbola
+#URxvt.font: xft:Dina,xft:Symbola
 !URxvt.letterSpace: 1
 URxvt.depth: 32
 URxvt.savelines: 10000
