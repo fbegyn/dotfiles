@@ -55,6 +55,15 @@ c.scrolling.smooth = True
 # Type: Bool
 c.tabs.background = True
 
+# Position of new tabs opened from another tab.
+# Type: NewTabPosition
+# Valid values:
+#   - prev: Before the current tab.
+#   - next: After the current tab.
+#   - first: At the beginning.
+#   - last: At the end.
+c.tabs.new_position.related = 'next'
+
 # Position of the tab bar.
 # Type: Position
 # Valid values:
@@ -113,7 +122,7 @@ c.colors.webpage.bg = 'white'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
-config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecast.sh queue "{hint-url}"')
+config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh window "{hint-url}"')
 config.bind('<Ctrl+Shift+v>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
 config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
 
