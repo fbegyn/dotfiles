@@ -38,7 +38,7 @@ hide_edge_borders smart
 floating_modifier $mod
 
 # Set terminal
-set $terminal /home/francis/.cargo/bin/alacritty
+set $terminal /usr/bin/alacritty
 
 # start a terminal
 bindsym $mod+Return exec $terminal -e 'tmux'
@@ -273,8 +273,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Brightness control
-bindsym XF86MonBrightnessDown exec /home/francis/Scripts/brightness down
-bindsym XF86MonBrightnessUp exec /home/francis/Scripts/brightness up
+bindsym XF86MonBrightnessDown exec /home/francis/Scripts/brightness.sh down
+bindsym XF86MonBrightnessUp exec /home/francis/Scripts/brightness.sh up
 
 # Bind wifi switching script
 bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
@@ -335,4 +335,4 @@ exec $terminal --class 'volume' -t volume_scratchpad -e pulsemixer
 # irssi scratchpad
 for_window [instance="irssi"] move to scratchpad, border 1pixel
 bindsym mod4+Shift+i [instance="irssi"] scratchpad show
-exec $terminal --class 'irssi' -t irssi_scratchpad -e irssi
+exec $terminal --class 'irssi' -t irssi_scratchpad
