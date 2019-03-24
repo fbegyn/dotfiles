@@ -41,7 +41,7 @@ floating_modifier $mod
 set $terminal /usr/bin/alacritty
 
 # start a terminal
-bindsym $mod+Return exec $terminal -e 'tmux'
+bindsym $mod+Return "exec $terminal -e tmux new-session -A -s main"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -282,7 +282,7 @@ bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 # Terminal scratchpad
 for_window [instance="terminalscratchpad"] move to scratchpad, border 1pixel
 bindsym mod4+Shift+Return [instance="terminalscratchpad"] scratchpad show
-exec $terminal --class 'terminalscratchpad' -t 'terminalscratchpad'
+exec $terminal --class 'terminalscratchpad' -t 'terminalscratchpad' -e '/usr/bin/zsh'
 
 # ncmpcpp scratchpad
 #for_window [instance="mpdscratchpad"] move to scratchpad, border 1pixel
@@ -335,4 +335,4 @@ exec $terminal --class 'volume' -t volume_scratchpad -e pulsemixer
 # irssi scratchpad
 for_window [instance="irssi"] move to scratchpad, border 1pixel
 bindsym mod4+Shift+i [instance="irssi"] scratchpad show
-exec $terminal --class 'irssi' -t irssi_scratchpad
+exec $terminal --class 'irssi' -t irssi_scratchpad -e '/usr/bin/zsh'
