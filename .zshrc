@@ -1,6 +1,5 @@
 # Personal config files for bash
 source ~/.config/aliases.sh
-source ~/.config/exports.sh
 source ~/.config/functions.sh
 
 # Liquidpromt
