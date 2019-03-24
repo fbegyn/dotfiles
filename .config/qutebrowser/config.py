@@ -109,7 +109,12 @@ c.url.default_page = 'https://wttr.in'
 # used by prepending the search engine name to the search term, e.g.
 # `:open google qutebrowser`.
 # Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}', 'gmaps': 'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov': 'https://www.imdb.com/find?q={}&s=all', 'maps': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}'}
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
+        'gmaps': 'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}',
+        'mov': 'https://www.imdb.com/find?q={}&s=all', 'maps':
+        'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}',
+        'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}',
+        'gscholar':'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q={}'}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
