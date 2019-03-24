@@ -12,8 +12,8 @@ Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'jwilm/i3-vim-focus'
 Plug 'tpope/vim-fugitive'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'airblade/vim-gitgutter'
+Plug 'sirver/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/indentLine'
@@ -34,6 +34,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-ultisnips'
 Plug 'roxma/nvim-yarp'
 
 Plug 'junegunn/goyo.vim'
@@ -46,7 +47,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Theme
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
 Plug 'NLKNguyen/papercolor-theme'
 
 " Languages
@@ -89,8 +91,8 @@ set updatetime=250
 set smartindent "Smart indent
 
 " Linebreak on 111 characters
-set textwidth=111
-set colorcolumn=110
+set textwidth=106
+set colorcolumn=105
 set linebreak
 set wrap "Wrap lines
 
@@ -261,9 +263,10 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " => Spell checking
+set spelllang=nl,en_gb
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
-hi SpellBad ctermfg=none ctermbg=4 guibg=Lime
 " Shortcuts using <leader>
 map <leader>sn ]s
 map <leader>sp [s
@@ -281,6 +284,7 @@ map <Leader>vi :VimuxInspectRunner<CR>
 " Zoom the tmux runner pane
 map <Leader>vz :VimuxZoomRunner<CR>
 
+" \ 'go' : ['/home/francis/Go/bin/go-langserver','-gocodecompletion','-func-snippet-enabled', 'false'],
 " Language server
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hasSnippetSupport = 0
@@ -290,7 +294,7 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['/usr/bin/pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'php': ['/usr/bin/php-language-server'],
-    \ 'go' : ['/home/francis/Go/bin/go-langserver','-gocodecompletion','-func-snippet-enabled', 'false'],
+    \ 'go' : ['/home/francis/Go/bin/gopls','serve'],
     \ 'html' : ['/usr/lib/node_modules/vscode-html-languageserver-bin/htmlServerMain.js','--stdio'],
     \ 'css' : ['/usr/lib/node_modules/vscode-css-languageserver-bin/cssServerMain.js','--stdio'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
@@ -325,21 +329,14 @@ augroup Goyo
 augroup end
 
 " Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 500
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#auto_complete_delay = 500
 
-" deoplete + neosnippet + autopairs changes
 let g:AutoPairsMapCR=0
-
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
 " CtrlP
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
-
-" neosnippet
-imap <C-k>    <Plug>(neosnippet_expand_or_jump)
-smap <C-k>    <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>    <Plug>(neosnippet_expand_target)
 
 " ale
 let g:ale_linters_explicit = 1
@@ -347,7 +344,7 @@ let g:ale_linters_explicit = 1
 let g:ale_completion_enabled = 0
 
 " => IndentLine
-let g:indentLine_char = '┆'
+let g:indentLine_char = '|'
 let g:indentLine_color_term = 239
 
 " => Golang
@@ -374,8 +371,12 @@ let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
 
 " => Git
-set statusline+=%{fugitive#statusline()}
+set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
 set signcolumn=yes
+
+" => airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " hledger
 " => Helper functions
@@ -396,17 +397,20 @@ let g:tcomment#replacements_xml={}
 nnoremap <Leader>p :set paste<CR>
 nnoremap <Leader>o :set nopaste<CR>
 
+" Color scheme
+" Background color
+set background=dark
+" Colorscheme
+colorscheme PaperColor
+
+" Spelling color
+highlight SpellBad cterm=underline ctermbg=130
 " Diffcolors
 highlight DiffAdd    cterm=bold ctermfg=2 ctermbg=none gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=1 ctermbg=none gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=none ctermfg=4 ctermbg=none gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=none ctermfg=11 ctermbg=none gui=none guifg=bg guibg=Red
 
-" Color scheme
-" Background color
-set background=dark
-" Colorscheme
-colorscheme PaperColor
 
 " reopening a file
 if has("autocmd")
@@ -414,6 +418,24 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+" Vimtex
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+" Snippets
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+set rtp+=./
+
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger		= "<tab>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 " NCM2 with latex
 au Filetype tex call ncm2#register_source({
         \ 'name' : 'vimtex-cmds',
