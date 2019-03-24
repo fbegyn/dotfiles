@@ -80,3 +80,7 @@ alias hoekpulse='PULSE_SERVER=10.0.0.5'
 
 alias skoupload='/usr/bin/rclone --config /home/francis/.config/rclone/rclone.conf copy --checksum --verbose --transfers 4 --checkers 8 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --stats 1s "/home/francis/Documents/Events/2019/Student Kick-Off 2019/Site & Safety 2019" "sko:Student Kick-Off 2019/Site & Safety 2019"'
 alias skosync='/usr/bin/rclone --config /home/francis/.config/rclone/rclone.conf copy --checksum --verbose --transfers 4 --checkers 8 --contimeout 60s --timeout 300s --retries 3 --low-level-retries 10 --stats 1s --exclude "*/*Archief*/" "sko:Student Kick-Off 2019" "/home/francis/Documents/Events/2019/Student Kick-Off 2019"'
+
+
+# Thesis things
+alias thesis='tmuxp load $TMUXP_HOME/thesis.yaml'
