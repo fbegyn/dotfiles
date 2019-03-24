@@ -1,13 +1,16 @@
 #!/bin/bash
 # set some system default
-export EDITOR='vim'
-export VISUAL='vim'
-export PAGER='less'
-export BROWSER='qutebrowser'
-export TERMINAL='alacritty'
+export EDITOR='/usr/bin/nvim'
+export VISUAL='/usr/bin/nvim'
+export PAGER='/usr/bin/less'
+export BROWSER='/usr/bin/qutebrowser'
+export TERMINAL='/usr/bin/alacritty'
+export XIVIEWER=feh
 
 # Pandoc template home
 export TEXINPUTS=~/.pandoc/templates:$TEXINPUTS
+
+export WINIT_HIDPI_FACTOR=1.0
 
 # home for python virtualenvs
 export WORKON_HOME=~/.virtualenvs
@@ -45,3 +48,6 @@ export DEBEMAIL='francis.begyn@gmail.com'
 
 # Ledger files
 export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2019.journal
+
+# Tmux sessions home
+export TMUXP_HOME=/home/francis/.config/tmuxp
