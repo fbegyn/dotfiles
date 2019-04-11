@@ -91,8 +91,8 @@ set updatetime=250
 set smartindent "Smart indent
 
 " Linebreak on 111 characters
-set textwidth=106
-set colorcolumn=105
+set textwidth=101
+set colorcolumn=100
 set linebreak
 set wrap "Wrap lines
 
@@ -284,7 +284,6 @@ map <Leader>vi :VimuxInspectRunner<CR>
 " Zoom the tmux runner pane
 map <Leader>vz :VimuxZoomRunner<CR>
 
-" \ 'go' : ['/home/francis/Go/bin/go-langserver','-gocodecompletion','-func-snippet-enabled', 'false'],
 " Language server
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hasSnippetSupport = 0
@@ -294,8 +293,8 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['/usr/bin/pyls'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'php': ['/usr/bin/php-language-server'],
-    \ 'go' : ['/home/francis/Go/bin/gopls','serve'],
     \ 'html' : ['/usr/lib/node_modules/vscode-html-languageserver-bin/htmlServerMain.js','--stdio'],
+    \ 'go' : ['/home/francis/Go/bin/gopls','-mode','-stdio'],
     \ 'css' : ['/usr/lib/node_modules/vscode-css-languageserver-bin/cssServerMain.js','--stdio'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
     \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
