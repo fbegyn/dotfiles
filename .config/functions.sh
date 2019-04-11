@@ -32,14 +32,14 @@ ms (){
 }
 
 notes() {
-  FILE="/home/francis/Documents/Notes/$(date "+%d-%m-%y").md"
+  FILE="/home/francis/Documents/Notes/$(date "+%y-%m-%d").md"
   CMD=':silent read !date "+\%n**\%H:\%M** "'
 
   vim -c '$' -c "execute '$CMD' | $ | execute 'norm $' | " -c ":Goyo" "$FILE"
 }
 
 note() {
-  FILE="/home/francis/Documents/Notes/$(date "+%d-%m-%y").md"
+  FILE="/home/francis/Documents/Notes/$(date "+%y-%m-%d").md"
   CMD=':silent read !date "+\%n**\%H:\%M** "'
 
   vim -c '$' -c "execute '$CMD' | $ | execute 'norm $' | " -c ":Goyo" "$FILE"
