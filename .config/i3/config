@@ -239,15 +239,12 @@ bindsym --release $mod+p exec rofi-pass
 # Execute and startup some fun programs
 exec --no-startup-id $locker
 exec --no-startup-id redshift
-#exec --no-startup-id nm-applet
 exec --no-startup-id dunst
-#exec --no-startup-id udiskie
+exec --no-startup-id udiskie -2At
 exec_always --no-startup-id ~/.fehbg
-#exec --no-startup-id lxsession
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id exec compton
-#exec --no-startup-id /home/francis/Scripts/monitor-toggle.sh
 exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
 
 # Reload monitor config
