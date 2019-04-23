@@ -306,7 +306,7 @@ exec --no-startup-id qutebrowser
 #exec --no-startup-id telegram-desktop
 #exec --no-startup-id thunderbird
 #exec --no-startup-id mailspring
-exec --no-startup-id spotify
+#exec --no-startup-id spotify
 
 # Asign programs to workspaces
 assign [class="Rambox"] $workspace2
