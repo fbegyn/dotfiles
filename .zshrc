@@ -34,15 +34,6 @@ bindkey '^ ' autosuggest-accept
 # Ignore /etc/hosts, too many hosts in there
 zstyle ':completion:*' hosts off
 
-# Theme settings
-AGKOZAK_PROMPT_DIRTRIM=4
-AGKOZAK_CUSTOM_PROMPT='%(?..%B%F{red}(%?%)%f%b )'
-AGKOZAK_CUSTOM_PROMPT+='%(!.%S%B.%B%F{green})%n%1v%(!.%b%s.%f%b) '
-AGKOZAK_CUSTOM_PROMPT+=$'%B%F{blue}%2v%f%b\n'
-AGKOZAK_CUSTOM_PROMPT+='%(4V.:.>) '
-
-AGKOZAK_CUSTOM_RPROMPT='%(3V.%F{yellow}%3v%f.)'
-
 # History settings
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
