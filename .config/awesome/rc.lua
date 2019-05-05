@@ -1,6 +1,5 @@
 --Configure home path so you dont have too
 home_path  = os.getenv('HOME') .. '/'
-
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -11,7 +10,6 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 beautiful.init( awful.util.getdir("config") .. "/themes/default/theme.lua" )
-
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -21,7 +19,15 @@ local wi = require("wi")
 require("cpu-widget.cpu-widget")
 -- Lain additions
 local lain = require("lain")
--- Battery widget
+-- Mouse and floating window management
+require("collision")()
+-- xrandr help
+local xrandr = require('xrandr')
+-- revelation
+local revelation=require("revelation")
+revelation.init()
+-- vicious widgets
+local vicious = require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -31,7 +37,6 @@ if awesome.startup_errors then
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
 end
-
 -- Handle runtime errors after startup
 do
     local in_error = false
@@ -76,35 +81,40 @@ local layouts =
     lain.layout.centerwork.horizontal,
     lain.layout.termfair,
     awful.layout.suit.floating,
-    --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     --awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
+    awful.layout.suit.fair,
+    awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.se,
+    awful.layout.suit.corner.sw,
+    awful.layout.suit.corner.nw
 }
 -- }}}
 
 -- {{{ Naughty presets
+naughty.config.padding = 8
+naughty.config.spacing = 8
 naughty.config.defaults.timeout = 5
 naughty.config.defaults.screen = 1
-naughty.config.defaults.position = "top_right"
+naughty.config.defaults.position = "top_middle"
 naughty.config.defaults.margin = 8
 naughty.config.defaults.gap = 1
 naughty.config.defaults.ontop = true
 naughty.config.defaults.font = "terminus 10"
 naughty.config.defaults.icon = nil
 naughty.config.defaults.icon_size = 32
-naughty.config.defaults.fg = beautiful.fg_tooltip
-naughty.config.defaults.bg = beautiful.bg_tooltip
+-- naughty.config.defaults.fg = beautiful.fg_tooltip
+naughty.config.defaults.fg = "#eee8d5"
+-- naughty.config.defaults.bg = beautiful.bg_tooltip
+naughty.config.defaults.bg = "#002b36"
 naughty.config.defaults.border_color = beautiful.border_tooltip
 naughty.config.defaults.border_width = 2
 naughty.config.defaults.hover_timeout = nil
+naughty.config.defaults.shape = gears.shape.rounded_rect
 -- -- }}}
 
 -- {{{ Wallpaper
@@ -119,27 +129,26 @@ end
 -- Define a tag table which hold all screen tags.
 tags = {
  names  = {
-         '🌐:Web',
-         '⌥::Social',
-         '📧:Mail',
-         '🎼:Music',
-         '✇ :IDE',
-         '6',
-         '7',
-         '8',
-         '⚙️ :Terminal',
-
-           },
+            '🌐:Web',
+            '⌥::Social',
+            '📧:Mail',
+            '🎼:Music',
+            '📼:Videos',
+            '✇ :IDE',
+            '📁:Files',
+            '8',
+            '⚙️ :Terminal',
+          },
  layout = {
       layouts[1],  -- 1:Web
-      layouts[7],  -- 2:Social
+      layouts[9],  -- 2:Social
       layouts[10], -- 3:Mail
       layouts[9],  -- 4:Music
-      layouts[5],  -- 5:IDE
-      layouts[1],  -- 6:
-      layouts[1],  -- 7:
+      layouts[9],  -- 6:Entertainement
+      layouts[1],  -- 5:IDE
+      layouts[1],  -- 7:Files
       layouts[1],  -- 8:
-      layouts[7],  -- 9:Terminal
+      layouts[1],  -- 9:Terminal
           }
        }
   for s = 1, screen.count() do
@@ -176,10 +185,14 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
+-- System settings menu
+mysystemsettings = {
+}
+
 -- System menu
 lockscreen = function() awful.util.spawn(locker) end
-suspend = function() awful.util.spawn("systemctl poweroff -i") end
-reboot = function() awful.util.spawn("systemctl poweroff -i") end
+suspend = function() awful.util.spawn("systemctl suspend") end
+reboot = function() awful.util.spawn("systemctl reboot") end
 poweroff = function() awful.util.spawn("systemctl poweroff -i") end
 mysystemmenu = {
    { "lock system", lockscreen },
@@ -189,33 +202,35 @@ mysystemmenu = {
 }
 
 -- Screenshot menu
-screenshot = "maim"
-screenshot_imgur = screenshot .. " | ~/Scripts/imgur.sh"
+screenshot = "/usr/bin/maim"
+screenshot_imgur = screenshot .. " | /home/francis/Scripts/imgur.sh"
 screenshot_file = screenshot .. " ~/Pictures/Screenshots/$(date +%F-%T).png"
 screenshot_clipboard = screenshot .. " | xclip -selection clipboard -t image/png"
-screenshot_selection = "maim -s"
-screenshot_select_imgur = screenshot_selection .. " | ~/Scripts/imgur.sh"
+screenshot_selection = "/usr/bin/maim -s"
+screenshot_select_imgur = screenshot_selection .. " | /home/francis/Scripts/imgur.sh"
 screenshot_select_file = screenshot_selection .. " ~/Pictures/Screenshots/$(date +%F-%T).png"
 screenshot_select_clipboard = screenshot_selection .. " | xclip -selection clipboard -t image/png"
 myscreenshotmenu = {
-  { "fullscreen", screenshotmenu = {
-      { "imgur", screenshot_imgur },
-      { "file", screenshot_file },
-      { "clipboard", screenshot_clipboard }
+    { "fullscreen", {
+            { "imgur", function() awful.util.spawn(screenshot_imgur) end },
+            { "file", function() awful.util.spawn(screenshot_file) end },
+            { "clipboard", function() awful.util.spawn(screenshot_clipboard) end }
+        }
+    },
+    { "selection", {
+            { "imgur", function() awful.util.spawn(screenshot_select_imgur) end },
+            { "file", function() awful.util.spawn(screenshot_select_file) end },
+            { "clipboard", function() awful.util.spawn(screenshot_select_clipboard) end }
+        }
     }
-  },
-  { "selection", screenshotselectmenu = {
-      { "imgur", screenshot_select_imgur },
-      { "file", screenshot_select_file },
-      { "clipboard", screenshot_select_clipboard }
-    }
-  }
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
-                                    { "wallpaper", wallmenu },
-                                    { "system", mysystemmenu }
+                                    { "screenshot", myscreenshotmenu },
+                                    { "system settings", mysystemsettings },
+                                    { "system", mysystemmenu },
+                                    { "wallpaper", wallmenu }
                                   }
                         })
 
@@ -229,9 +244,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibox
--- Create a textclock widget
-mytextclock = awful.widget.textclock()
-
 -- Create a wibox for each screen and add it
 mywibox = {}
 myinfowibox = {}
@@ -311,11 +323,22 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(spacer)
-    right_layout:add(volumearc_widget)
+    volwidget = wibox.widget.textbox()
+		-- Register battery widget
+		vicious.register(volwidget, vicious.widgets.volume, "$1% $2", 2, "Master")
+    right_layout:add(volwidget)
     right_layout:add(spacer)
     right_layout:add(spotify_widget)
+    --right_layout:add(spacer)
+    batwidget = wibox.widget.textbox()
+		-- Register battery widget
+		vicious.register(batwidget, vicious.widgets.bat, "$1 $2% $3", 61, "BAT0")
+    right_layout:add(batwidget)
     right_layout:add(spacer)
-    right_layout:add(mytextclock)
+    datewidget = wibox.widget.textbox()
+    vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
+    right_layout:add(datewidget)
+    right_layout:add(spacer)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
@@ -324,26 +347,41 @@ for s = 1, screen.count() do
     layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
 
-   mywibox[s]:set_widget(layout)
+    mywibox[s]:set_widget(layout)
 
-   -- Create the bottom wibox
+    -- Create the bottom wibox
     myinfowibox[s] = awful.wibox({ position = "bottom", screen = s })
-   -- Widgets that are aligned to the bottom
-   --
+    -- Widgets that are aligned to the bottom
+    --
     local bottom_layout = wibox.layout.fixed.horizontal()
     bottom_layout:add(cpuicon)
-    bottom_layout:add(cpu_widget)
+		cpuwidget = awful.widget.graph()
+    cpuwidget:set_width(50)
+    cpuwidget:set_background_color"#494B4F"
+    cpuwidget:set_color{type = "linear", from = {0, 0}, to = {50, 0},
+                      stops = {{0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96"}}}
+		vicious.register(cpuwidget, vicious.widgets.cpu, "$1", 5)
+    bottom_layout:add(cpuwidget)
     bottom_layout:add(spacer)
     bottom_layout:add(memicon)
-    bottom_layout:add(mem)
+		memwidget = wibox.widget.textbox()
+    vicious.cache(vicious.widgets.mem)
+    vicious.register(memwidget, vicious.widgets.mem, "$1 ($2MiB/$3MiB)", 13)
+    bottom_layout:add(memwidget)
+    bottom_layout:add(spacer)
+    pkgwidget = wibox.widget.textbox()
+		vicious.register(pkgwidget, vicious.widgets.pkg, "$1 update", 293, "Arch")
+    bottom_layout:add(pkgwidget)
+    bottom_layout:add(spacer)
+    wifiwidget = wibox.widget.textbox()
+		vicious.register(wifiwidget, vicious.widgets.wifiiw, "${ssid} (${freq} Mhz) ${linp}%", 10, "wlp58s0")
+    bottom_layout:add(wifiwidget)
     bottom_layout:add(spacer)
 
 
-
- -- Now bring it all together
+  -- Now bring it all together
     --local layout = wibox.layout.align.horizontal()
     --layout:set_bottom(bottom_layout)
-
     myinfowibox[s]:set_widget(bottom_layout)
 
 end
@@ -357,11 +395,18 @@ root.buttons(awful.util.table.join(
 ))
 -- }}}
 
+--local poppin_terminal = poppin.pop("terminal", "alacritty", "center", 1000, { border_width = 5 })
+--local poppin_volume = poppin.pop("volume", "alacritty -e pulsemixer", "center", 1000, { border_width = 5 })
+--local poppin_irssi = poppin.pop("irssi", "alacritty -e ssh -p 65222 francisbegyn.be", "center", 1000, { border_width = 5 })
+
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- Focus
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    --awful.key({ modkey,           }, "Left",   awful.tag.viewprevious   ),
+    --awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    awful.key({ modkey,           }, "e", function() revelation() end),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -397,6 +442,7 @@ globalkeys = gears.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(shell) end),
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "c", awesome.quit),
     -- awful.key({ modkey,           }, "w",     function () awful.util.spawn("qutebrowser")    end, "Start Qutebrowser"),
@@ -413,7 +459,8 @@ globalkeys = gears.table.join(
               end),
 
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end),
+    --awful.key({ modkey }, "p", function() menubar.show() end),
+    awful.key({ modkey }, "p", function() awful.util.spawn("rofi-pass") end),
     awful.key({ modkey }, "d", function() awful.util.spawn("rofi -show run") end),
 
     -- User
@@ -428,14 +475,13 @@ globalkeys = gears.table.join(
     awful.key({ "",}, "XF86AudioNext", function () awful.util.spawn("playerctl next") end),
     awful.key({ "",}, "XF86AudioPrev", function () awful.util.spawn("playerctl previous") end),
     -- Wireless switcher
-    awful.key({ modkey,           }, "w", function () awful.util.spawn("~/Scripts/wpa_switcher.sh") end),
+    awful.key({ modkey,           }, "w", function () awful.util.spawn("/home/francis/Scripts/wpa_switcher.sh") end),
     -- Monitor hotplug script
-    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("~/Scripts/monitor-hotplug.sh") end),
+    --awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("~/Scripts/monitor-hotplug.sh") end),
+    awful.key({ modkey, "Shift"   }, "m", function () xrandr.xrandr() end),
     -- Brightness
-    awful.key({ "",}, "XF86MonBrightnessDown", function () awful.util.spawn("~/Scripts/brightness.sh down") end),
-    awful.key({ "",}, "XF86MonBrightnessUp", function () awful.util.spawn("~/Scripts/brightness.sh up") end)
-    -- Scratchpads
-    --awful.key({ modkey, "Shift"}, "v", function () scratch.drop("alacritty", "top", "center", 720, 400) end)
+    awful.key({ "",}, "XF86MonBrightnessDown", function () awful.util.spawn("/home/francis/Scripts/brightness.sh down") end),
+    awful.key({ "",}, "XF86MonBrightnessUp", function () awful.util.spawn("/home/francis/Scripts/brightness.sh up") end)
 )
 
 clientkeys = gears.table.join(
@@ -514,7 +560,8 @@ end
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+    awful.button({ modkey }, 3, awful.mouse.client.resize)
+)
 
 -- Set keys
 root.keys(globalkeys)
@@ -529,11 +576,15 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-      properties = { floating = true },
     { rule = { class = "Qutebrowser" },
       properties = { tag = tags[1][1] } },
-    { rule = { class = "Rambox" },
-      properties = { tag = tags[1][2] } },
+    { rule = { class = "Rambox",  },
+      properties = { tag = tags[1][2], floating = false, skip_taskbar = false,
+                      maximized = false,  } },
+    { rule = { class = "Spotify" },
+      properties = { tag = tags[1][4] } },
+    { rule = { class = "Nautilus" },
+      properties = { floating = true } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][3] } }
     -- Set Firefox to always map on tags number 2 of screen 1.
@@ -556,7 +607,7 @@ client.connect_signal("manage", function (c, startup)
     if not startup then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
+        awful.client.setslave(c)
 
         -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then

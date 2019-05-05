@@ -13,5 +13,5 @@ run redshift
 run udiskie -2At
 #run dunst
 #run /usr/bin/i3lock -c 000000
-run Rambox
-run Thunderbird
+#run rambox
+run thunderbird
