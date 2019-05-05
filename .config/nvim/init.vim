@@ -32,8 +32,8 @@ Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'roxma/nvim-yarp'
 
@@ -289,21 +289,21 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hasSnippetSupport = 0
 let g:LanguageClient_hoverPreview = 'Never'
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'rust': ['/home/francis/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'python': ['/usr/bin/pyls'],
-    \ 'sh': ['bash-language-server', 'start'],
+    \ 'sh': ['/usr/bin/bash-language-server', 'start'],
     \ 'php': ['/usr/bin/php-language-server'],
     \ 'html' : ['/usr/lib/node_modules/vscode-html-languageserver-bin/htmlServerMain.js','--stdio'],
     \ 'go' : ['/home/francis/Go/bin/gopls','-mode','-stdio'],
     \ 'css' : ['/usr/lib/node_modules/vscode-css-languageserver-bin/cssServerMain.js','--stdio'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+    \ 'cpp': ['/usr/bin/cquery', '--log-file=/tmp/cq.log'],
+    \ 'c': ['/usr/bin/cquery', '--log-file=/tmp/cq.log'],
     \ 'json' : ['/usr/lib/node_modules/vscode-json-languageserver-bin/jsonServerMain.js','--stdio'],
     \ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
 \}
 nnoremap <F7> :call LanguageClient_contextMenu()<CR>
 noremap <leader>rn :call LanguageClient#textDocument_rename()<CR>
-call ncm2#override_source('LanguageClient_python', {'enable': 0})
+call ncm2#override_source('LanguageClient_python', {'enable': 1})
 
 let g:multi_cursor_use_default_mapping=0
 " Default mapping
