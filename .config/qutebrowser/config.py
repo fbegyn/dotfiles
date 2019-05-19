@@ -55,7 +55,8 @@ c.scrolling.smooth = True
 # Type: Bool
 c.tabs.background = True
 
-# Position of new tabs opened from another tab.
+# Position of new tabs opened from another tab. See
+# `tabs.new_position.stacking` for controlling stacking behavior.
 # Type: NewTabPosition
 # Valid values:
 #   - prev: Before the current tab.
@@ -98,7 +99,7 @@ c.tabs.width = '7%'
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
 # Type: FuzzyUrl
-c.url.default_page = 'https://wttr.in'
+c.url.default_page = 'https://www.notion.so/fbegyn/Personal-Home-728ad03bcd06479796a696eb75fb6b66'
 
 # Search engines which can be used via the address bar. Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -109,12 +110,7 @@ c.url.default_page = 'https://wttr.in'
 # used by prepending the search engine name to the search term, e.g.
 # `:open google qutebrowser`.
 # Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}',
-        'gmaps': 'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}',
-        'mov': 'https://www.imdb.com/find?q={}&s=all', 'maps':
-        'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}',
-        'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}',
-        'gscholar':'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q={}'}
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'g': 'https://google.com/search?q={}', 'gmaps': 'https://www.google.be/maps/search/{}+', 'aw': 'https://wiki.archlinux.org/?search={}', 'mov': 'https://www.imdb.com/find?q={}&s=all', 'maps': 'https://www.openstreetmap.org/search?query={}', 'red': 'https://www.reddit.com/search?q={}', 'word': 'https://www.wordnik.com/words/{}', 'woord': 'https://woordenlijst.org/#/?q={}', 'gscholar': 'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q={}'}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
@@ -127,7 +123,8 @@ c.colors.webpage.bg = 'white'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
-config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh window "{hint-url}"')
+config.bind('<Ctrl-Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh queue "{hint-url}"')
+config.bind('<Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh window "{hint-url}"')
 config.bind('<Ctrl+Shift+v>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
 config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
 
