@@ -212,15 +212,15 @@ screenshot_select_file = screenshot_selection .. " ~/Pictures/Screenshots/$(date
 screenshot_select_clipboard = screenshot_selection .. " | xclip -selection clipboard -t image/png"
 myscreenshotmenu = {
     { "fullscreen", {
-            { "imgur", function() awful.util.spawn(screenshot_imgur) end },
+            { "imgur", function() awful.spawn(screenshot_imgur) end },
             { "file", function() awful.util.spawn(screenshot_file) end },
-            { "clipboard", function() awful.util.spawn(screenshot_clipboard) end }
+            { "clipboard", function() awful.spawn(screenshot_clipboard) end }
         }
     },
     { "selection", {
             { "imgur", function() awful.util.spawn(screenshot_select_imgur) end },
             { "file", function() awful.util.spawn(screenshot_select_file) end },
-            { "clipboard", function() awful.util.spawn(screenshot_select_clipboard) end }
+            { "clipboard", function() awful.spawn(screenshot_select_clipboard) end }
         }
     }
 }
@@ -403,8 +403,8 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- Focus
-    --awful.key({ modkey,           }, "Left",   awful.tag.viewprevious   ),
-    --awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    -- awful.key({ modkey,           }, "Left",   awful.tag.viewprevious   ),
+    -- awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     awful.key({ modkey,           }, "e", function() revelation() end),
     awful.key({ modkey,           }, "j",
@@ -478,7 +478,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "w", function () awful.util.spawn("/home/francis/Scripts/wpa_switcher.sh") end),
     -- Monitor hotplug script
     --awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("~/Scripts/monitor-hotplug.sh") end),
-    awful.key({ modkey, "Shift"   }, "m", function () xrandr.xrandr() end),
+    awful.key({ modkey, "Shift"   }, "m", function () awful.util.spawn("/home/francis/Scripts/monitor-hotplug.sh") end),
     -- Brightness
     awful.key({ "",}, "XF86MonBrightnessDown", function () awful.util.spawn("/home/francis/Scripts/brightness.sh down") end),
     awful.key({ "",}, "XF86MonBrightnessUp", function () awful.util.spawn("/home/francis/Scripts/brightness.sh up") end)
@@ -584,7 +584,9 @@ awful.rules.rules = {
     { rule = { class = "Spotify" },
       properties = { tag = tags[1][4] } },
     { rule = { class = "Nautilus" },
-      properties = { floating = true } },
+      properties = { floating = true, maximized = false} },
+    { rule = { class = "Org.gnome.Nautilus" },
+      properties = { floating = true, maximized = false} },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][3] } }
     -- Set Firefox to always map on tags number 2 of screen 1.
@@ -657,6 +659,35 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- screen signals
+tag.connect_signal("request::screen", function(t)
+    clients = t:clients()
+    for s in screen do
+        if s ~= t.screen and clients and next(clients) then
+            t.screen = s
+            t.original_tag_name = t.original_tag_name or t.name
+            t.name = t.name .. "'"
+            t.volatile = true
+            return
+        end
+    end
+end)
+
+screen.connect_signal("added", function(s)
+    for k,t in pairs(root.tags()) do
+        if t.original_tag_name then
+          -- find the new tag on the new screen
+            new_tag = awful.tag.find_by_name(s, t.original_tag_name)
+            if new_tag then
+                t.name = t.original_tag_name
+                t.original_tag_name = nil
+                new_tag:swap(t)
+                new_tag:delete(t, true)
+            end
+        end
+    end
+end)
 
 -- Autostart programs
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
