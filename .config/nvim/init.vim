@@ -36,7 +36,8 @@ Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'roxma/nvim-yarp'
-
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
@@ -315,6 +316,10 @@ let g:multi_cursor_next_key            = '<C-n>'
 let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
+
+" session manager
+let g:session_autoload = 'no'
+let g:session_autosave = 'yes'
 
 " => goyo
 nnoremap <leader>f :Goyo<cr>
