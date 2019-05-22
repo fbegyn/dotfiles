@@ -49,6 +49,15 @@ tohoek(){
   scp -r "$@" music@10.0.0.5:Music
 }
 
+msgkelder(){
+  curl -X POST \
+  https://kelder.zeus.ugent.be/messages/ \
+  -H 'Content-Type: text/plain' \
+  -H 'Host: kelder.zeus.ugent.be' \
+  -H 'X-Username: fbegyn' \
+  -d $1
+}
+
 wifirssi(){
   iw dev $1 scan | egrep "SSID|signal" | awk -F ":" '{print $2}' | sed 'N;s/\n/:/' | sort
 }
