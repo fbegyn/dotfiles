@@ -587,6 +587,8 @@ awful.rules.rules = {
       properties = { floating = true, maximized = false} },
     { rule = { class = "Org.gnome.Nautilus" },
       properties = { floating = true, maximized = false} },
+    { rule = { class = "Pavucontrol" },
+      properties = { floating = true, maximized = false} },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][3] } }
     -- Set Firefox to always map on tags number 2 of screen 1.
