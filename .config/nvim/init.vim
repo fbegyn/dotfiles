@@ -51,6 +51,7 @@ Plug 'w0rp/ale'
 "Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'srcery-colors/srcery-vim'
 
 " Languages
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
@@ -95,7 +96,7 @@ set smartindent "Smart indent
 set textwidth=101
 set colorcolumn=100
 set linebreak
-set wrap "Wrap lines
+set wrap
 
 set number
 set numberwidth=2
@@ -405,7 +406,7 @@ nnoremap <Leader>o :set nopaste<CR>
 " Background color
 set background=dark
 " Colorscheme
-colorscheme PaperColor
+colorscheme srcery
 
 " Spelling color
 highlight SpellBad cterm=underline ctermbg=130
@@ -425,9 +426,15 @@ endif
 " Vimtex
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
-let g:vimtex_quickfix_mode=0
+let g:vimtex_quickfix_mode=2
 set conceallevel=1
 let g:tex_conceal='abdmg'
+let g:tex_fast='r'
+let g:vimtex_quickfix_autoclose_after_keystrokes=5
+let g:vimtex_quickfix_open_on_warning=0
+let g:vimtex_toc_enabled=1
+let g:vimtex_toc_todo_keywords=['TODO', 'FIXME']
+let g:vimtex_fold_enabled=1
 " Snippets
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
