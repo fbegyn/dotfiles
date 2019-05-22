@@ -1,0 +1,6 @@
+
+rofi.terminal:                       alacritty
+rofi.ssh-client:                     ssh
+rofi.ssh-command:                    {terminal} -e {ssh-client} {host}
+
+rofi.theme: ~/.config/rofi/themes/srcery.rasi
