@@ -11,7 +11,6 @@ run compton
 run qutebrowser
 run redshift
 run udiskie -2At
-#run dunst
-#run /usr/bin/i3lock -c 000000
 #run rambox
 run thunderbird
+run mpd ~/.config/mpd/mpd.conf
