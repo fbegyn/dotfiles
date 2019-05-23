@@ -44,7 +44,7 @@ c.downloads.location.directory = '/home/francis/Downloads'
 # Duration (in milliseconds) to wait before removing finished downloads.
 # If set to -1, downloads are never removed.
 # Type: Int
-c.downloads.remove_finished = 10000
+c.downloads.remove_finished = 45000
 
 # Enable smooth scrolling for web pages. Note smooth scrolling does not
 # work with the `:scroll-px` command.
@@ -123,10 +123,11 @@ c.colors.webpage.bg = 'white'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
-config.bind('<Ctrl-Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh queue "{hint-url}"')
-config.bind('<Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh window "{hint-url}"')
-config.bind('<Ctrl+Shift+v>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
+config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh queue "{hint-url}"')
+config.bind('<Shift+c', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh single "{hint-url}"')
+config.bind('<Ctrl+Shift+r>', 'spawn --userscript readability')
 config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
+config.bind('<Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
 
 # Bindings for command mode
 config.bind('<Ctrl+j>', 'completion-item-focus next', mode='command')
