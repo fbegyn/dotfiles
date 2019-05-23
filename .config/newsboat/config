@@ -1,0 +1,40 @@
+# general
+auto-reload yes
+max-items 50
+reload-time 30
+
+# alternative browsers
+macro m set browser "/usr/local/bin/mpv %u"; open-in-browser ; set browser "/usr/bin/qutebrowser %u"
+macro t set browser "/usr/bin/w3m %u"; open-in-browser ; set browser "/usr/bin/qutebrowser %u"
+
+# unbind defaults
+unbind-key ENTER
+unbind-key h
+unbind-key j
+unbind-key k
+unbind-key l
+# vim style movement
+bind-key h quit
+bind-key j down
+bind-key k up
+bind-key l open
+# home/end
+unbind-key g
+bind-key g home
+unbind-key G
+bind-key G end
+
+# highlights
+highlight article "^(Title):.*$" blue default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" green default
+
+# interface colors {{{
+
+color info              color15 color8  bold
+color listfocus         color10 color8
+color listfocus_unread  color9  color8
+color listnormal        color7  default
+color listnormal_unread color15 default
+
+# }}}
