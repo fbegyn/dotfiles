@@ -67,6 +67,7 @@ Plug 'othree/html5.vim', { 'for':['html','htm'] }
 Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 Plug 'ledger/vim-ledger',{'for':['journal']}
 Plug 'lervag/vimtex',{'for':['latex','tex']}
+Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
@@ -285,6 +286,9 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 map <Leader>vi :VimuxInspectRunner<CR>
 " Zoom the tmux runner pane
 map <Leader>vz :VimuxZoomRunner<CR>
+
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
 
 " Language server
 let g:LanguageClient_autoStart = 1
