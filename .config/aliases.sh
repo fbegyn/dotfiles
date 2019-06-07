@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ~/.config/git.sh
+
 # Aliases for yay
 alias paupg='yay -Syu'
 alias pasu='yay -Syu --noconfirm'
@@ -17,10 +18,15 @@ alias paorph='yay -Qtd'
 alias painsd='yay -S --asdeps'
 alias pamir='yay -Syy'
 
+alias rm='rm -i'
+alias mv='mv -i'
+
 # Aliases to make ls better
 #alias ls='exa'
 #alias ll='exa -l'
 #alias la='exa -a'
+
+alias weechat='ssh droplet'
 
 alias vim='nvim'
 alias vi='nvim'
