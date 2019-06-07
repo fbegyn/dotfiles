@@ -41,7 +41,7 @@ floating_modifier $mod
 set $terminal /usr/bin/alacritty
 
 # start a terminal
-bindsym $mod+Return "exec $terminal -e tmux new-session -A -s main"
+bindsym $mod+Return exec "$terminal -e tmux new-session -A -s main"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -237,7 +237,7 @@ bindsym --release $mod+p exec rofi-pass
 
 
 # Execute and startup some fun programs
-exec --no-startup-id $locker
+#exec --no-startup-id $locker
 exec --no-startup-id redshift
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -2At
@@ -251,7 +251,7 @@ exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
 
 # Screen lock
-bindsym Mod1+l exec /usr/bin/i3lock -c 000000
+bindsym Mod1+l exec $locker
 
 # Autolocker
 #exec_always --no-startup-id xautolock
