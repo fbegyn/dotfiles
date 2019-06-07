@@ -5,6 +5,9 @@
 # this file and re-run i3-config-wizard(1).
 #
 
+# Xorg compatibility
+xwayland enable
+
 # set wallpaper
 output "*" background ~/Pictures/Wallpapers/esc18-foh.jpg fill
 
@@ -124,11 +127,11 @@ set $workspace1 1:web
 set $workspace2 2:comms
 set $workspace3 3:mail
 set $workspace4 4:music
-set $workspace5 5
-set $workspace6 6
-set $workspace7 7
+set $workspace5 5:video
+set $workspace6 6:ide
+set $workspace7 7:files
 set $workspace8 8
-set $workspace9 9
+set $workspace9 9:terminal
 set $workspace10 0
 
 # switch to workspace
@@ -162,11 +165,11 @@ bindsym Mod1+Shift+k move workspace to output up
 bindsym Mod1+Shift+l move workspace to output left
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+#bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 set $size_step 2 px or 2 ppt
@@ -203,12 +206,11 @@ exec_always ~/.config/waybar/waybar.sh
 set $locker /usr/bin/swaylock -c 000000
 
 #System menu
-set $mode_system System (l)lock,(e)logout,(s)freeze,(r)reboot,(h)susp to disk,(Shift+s)shutdown
+set $mode_system System (l)lock,(e)logout,(s)suspend,(r)reboot,(Shift+s)shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
@@ -218,6 +220,17 @@ mode "$mode_system" {
 }
 
 bindsym $mod+Pause mode "$mode_system"
+
+#bindswitch lid:on exec systemctl suspend
+
+# idle config
+# Idle configuration
+exec swayidle \
+    timeout 60 'exec $locker' \
+    timeout 300 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+    timeout 900 'systemctl suspend' \
+    before-sleep 'exec $locker'
 
 # Screenshot menu
 set $screen_grab s/f imgur, Shift+s/f local, Alt+s/f clip
@@ -245,13 +258,12 @@ bindsym $mod+y floating toggle; resize set 320 200; sticky toggle; move window t
 for_window [title="yt-player"] floating_minimum_size 320x200; floating_maximum_size 320x200;
 
 # Immediately play youtube from rofi output
-bindsym --release $mod+p exec rofi-pass
-
+bindsym $mod+p exec rofi-pass
 
 # Execute and startup some fun programs
 exec --no-startup-id redshift
 exec --no-startup-id mako
-exec --no-startup-id udiskie -2At
+exec udiskie -2At
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
@@ -259,7 +271,7 @@ exec --no-startup-id compton
 exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
 
 # Reload monitor config
-bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
+bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/dockmode.sh
 
 # Screen lock
 bindsym Mod1+l exec $locker
@@ -317,8 +329,7 @@ exec --no-startup-id qutebrowser
 #exec --no-startup-id slack
 #exec --no-startup-id rambox
 #exec --no-startup-id telegram-desktop
-#exec --no-startup-id thunderbird
-#exec --no-startup-id mailspring
+exec --no-startup-id thunderbird
 #exec --no-startup-id spotify
 
 # Asign programs to workspaces
@@ -347,10 +358,3 @@ for_window [app_id="blueberry.py"] floating enable
 #bindsym mod4+Shift+i [instance="irssi"] scratchpad show
 #exec $terminal --class 'irssi' -t irssi_scratchpad -e '/usr/bin/zsh'
 #
-# idle config
-# Idle configuration
-exec swayidle \
-    timeout 300 'exec $locker' \
-    timeout 600 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"' \
-    before-sleep 'exec $locker'

@@ -33,13 +33,16 @@
         "tooltip": false
     },
     "network": {
-        "format": "{icon}",
+        "format-wifi": "{essid} {frequency}MHz ({signalStrength}%) {icon}",
+        "format-ethernet": "{icon} {ifname} {ipaddr}/{cidr}",
+        "format-disconnected": "X",
+        "format": "{essid} {ipaddr}/{cidr} {icon}",
         "format-alt": "{ipaddr}/{cidr} {icon}",
         "format-alt-click": "click-right",
         "format-icons": {
-            "wifi": ["", "📶" ,"📶"],
-            "ethernet": [""],
-            "disconnected": [""]
+            "wifi": ["☓", "📶" ,"📶"],
+            "ethernet": ["🔌"],
+            "disconnected": ["☓"]
         },
         "on-click": "termite -e nmtui",
     "tooltip": false
@@ -76,9 +79,9 @@
         "format": "{icon}",
         "format-alt": "{percent}% {icon}",
         "format-alt-click": "click-right",
-        "format-icons": ["brightness", "brightness"],
-        "on-scroll-down": "light -A 1",
-        "on-scroll-up": "light -U 1"
+        "format-icons": ["☾", "☼"],
+        "on-scroll-up": "light -A 1",
+        "on-scroll-down": "light -U 1"
     },
     "custom/weather": {
         "format": "{}",
