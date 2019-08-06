@@ -66,9 +66,6 @@ alias raspgo='env GOOS=linux GOARCH=arm GOARM=5 go'
 alias 'tn'='tmux new -s'
 alias 'ta'='tmux attach -t'
 
-# Easier to type light then brightnessctl
-alias light='brightnessctl'
-
 # vim, but then sudoes
 alias svim='sudo -E nvim'
 

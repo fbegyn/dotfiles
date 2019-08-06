@@ -1,16 +1,13 @@
 # Personal config files for bash
-source ~/.config/aliases.sh
-source ~/.config/functions.sh
-
 # Liquidpromt
 #source ~/.config/liquidprompt/liquidprompt
 #[[ $- = *i*  ]] && source ~/.config/liquidprompt/liquidprompt
 # Quick moving around directories
-. /home/francis/.config/z.sh
-# Plugin loading
-. /home/francis/.config/zsh/zsh_plugins.sh
-# fzf keybindings
-. /home/francis/.config/zsh/fzf-keybindings.zsh
+. $HOME/.config/z.sh
+
+. $HOME/.config/zsh/zsh_plugins.sh
+
+. $HOME/.config/zsh/fzf-keybindings.zsh
 # Git autocompletions
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then

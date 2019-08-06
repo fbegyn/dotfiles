@@ -5,6 +5,10 @@ fup() {
     curl -F"file=@$1" http://0x0.st;
 }
 
+calc(){
+  julia -E "$1"
+}
+
 # get common examples
 cheat(){
     curl cheat.sh/$1;
