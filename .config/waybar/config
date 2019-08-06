@@ -44,20 +44,20 @@
             "ethernet": ["🔌"],
             "disconnected": ["☓"]
         },
-        "on-click": "termite -e nmtui",
+        "on-click": "alacritty -e nmtui",
     "tooltip": false
     },
     "pulseaudio": {
-        "format": "{icon}",
-        "format-alt": "{volume} {icon}",
+        "format": "{volume} {icon}",
+        "format-alt": "{icon}",
         "format-alt-click": "click-right",
         "format-muted": "𝄻",
         "format-icons": {
             "phone": ["♩", "♪", "♫", "♬"],
             "default": ["♩", "♪", "♫", "♬"]
         },
-        "scroll-step": 10,
-        "on-click": "pavucontrol",
+        "scroll-step": 1,
+        "on-click": "alacritty -e pulsemixer",
         "tooltip": false
     },
     "custom/spotify": {
