@@ -24,6 +24,9 @@ input 1452:570:Toetsenbord_van_Tekenkamer {
     xkb_numlock disabled
   }
 
+# hide cursor after time
+seat seat0 hide_cursor 2500
+
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
@@ -61,12 +64,13 @@ set $terminal /usr/bin/alacritty
 
 # start a terminal
 bindsym $mod+Return exec $terminal -e tmux new-session -A -s main
-bindsym $mod+Shift+Return exec $terminal
+#bindsym $mod+Shift+Return exec $terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
+bindsym $mod+Shift+d exec rofi -show drun
 bindsym $mod+d exec rofi -show run
 bindsym $mod+a exec rofi -show window
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -203,7 +207,7 @@ bindsym $mod+r mode "resize"
 exec_always ~/.config/waybar/waybar.sh
 
 # Set the locker variable
-set $locker /usr/bin/swaylock -c 000000
+set $locker /usr/bin/swaylock -c 000000 --clock
 
 #System menu
 set $mode_system System (l)lock,(e)logout,(s)suspend,(r)reboot,(Shift+s)shutdown
@@ -227,10 +231,16 @@ bindsym $mod+Pause mode "$mode_system"
 # Idle configuration
 exec swayidle \
     timeout 60 'exec $locker' \
-    timeout 300 'swaymsg "output * dpms off"' \
+    timeout 360 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
-    timeout 900 'systemctl suspend' \
+    timeout 1800 'systemctl suspend' \
     before-sleep 'exec $locker'
+
+# disable laptop output on lid close
+# enabling this, then I should disabl the logind handlers
+set $laptop_display eDP-1
+bindswitch lid:on output $laptop_display disable
+bindswitch lid:off output $laptop_display enable; exec $locker
 
 # Screenshot menu
 set $screen_grab s/f imgur, Shift+s/f local, Alt+s/f clip
@@ -267,8 +277,8 @@ exec udiskie -2At
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
-exec --no-startup-id compton
 exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
+exec --no-startup-id nm-applet --indicator
 
 # Reload monitor config
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/dockmode.sh
@@ -302,9 +312,9 @@ bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
 bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 
 # Terminal scratchpad
-#for_window [instance="terminalscratchpad"] move to scratchpad, border 1pixel
-#bindsym mod4+Shift+Return [instance="terminalscratchpad"] scratchpad show
 #exec $terminal --class 'terminalscratchpad' -t 'terminalscratchpad' -e '/usr/bin/zsh'
+#for_window [instance="terminalscratchpad"] move scratchpad, border 1pixel
+#bindsym $mod+Shift+Return scratchpad show
 
 # ncmpcpp scratchpad
 #for_window [instance="mpdscratchpad"] move to scratchpad, border 1pixel
@@ -312,9 +322,9 @@ bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 #exec $terminal --class 'mpdscratchpad' -t 'mpdscratchpad' -e ncmpcpp
 
 # Ranger scratchpad
-#for_window [instance="file_scratchpad"] move to scratchpad, border 1pixel
+#for_window [instance="file_scratchpad"] move scratchpad, border 1pixel
 #bindsym mod4+Shift+f [instance="file_scratchpad"] scratchpad show
-#exec $terminal --class 'file_scratchpad' -t file_scratchpad -e ranger
+#bindsym $mod+Shift+f exec $terminal --class 'file_scratchpad' -t file_scratchpad -e ranger
 
 # Autoswitch workspaces
 workspace_auto_back_and_forth yes
@@ -347,6 +357,8 @@ for_window [class="Spotify"] move to workspace $workspace4
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="Nautilus"] floating enable
 for_window [app_id="blueberry.py"] floating enable
+
+for_window [app_id="mpv"] inhibit_idle visible
 
 # Volume scratchpad
 #for_window [instance="volume"] move to scratchpad, border 1pixel
