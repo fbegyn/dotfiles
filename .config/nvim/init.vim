@@ -20,6 +20,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-vinegar'
+Plug 'scrooloose/nerdtree'
 ""if has('nvim')
 ""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 ""else
@@ -28,13 +29,16 @@ Plug 'tpope/vim-vinegar'
 ""  Plug 'roxma/vim-hug-neovim-rpc'
 ""endif
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-
+"
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-ultisnips'
+
+"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+""
 Plug 'roxma/nvim-yarp'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
@@ -48,9 +52,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Theme
-"Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'srcery-colors/srcery-vim'
 
 " Languages
@@ -59,7 +61,6 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'benmills/vimux-golang'
 Plug 'buoto/gotests-vim',{'for':['go']}
 Plug 'rust-lang/rust.vim',{'for':['rs']}
-Plug 'stevearc/vim-arduino', { 'for': 'ino' }
 Plug 'davidhalter/jedi-vim', { 'for':'python'}
 Plug 'pangloss/vim-javascript',{ 'for' : ['js']}
 Plug 'elzr/vim-json',{ 'for' : ['json']}
@@ -67,6 +68,7 @@ Plug 'othree/html5.vim', { 'for':['html','htm'] }
 Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 Plug 'ledger/vim-ledger',{'for':['journal']}
 Plug 'lervag/vimtex',{'for':['latex','tex']}
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 call plug#end()
 
@@ -134,8 +136,8 @@ set nrformats-=octal
 
 " Rounds to indent to multiples of shiftwidth
 set shiftround
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
 " Use spaces instead of tabs
 set expandtab
 
@@ -148,9 +150,6 @@ nmap <leader>w :w!<cr>
 " Fast exiting
 nnoremap <leader>qq :qa!<cr>
 nnoremap <leader>q :q!<cr>
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
 
 " exit insert mode
 inoremap <C-c> <Esc>
@@ -302,8 +301,8 @@ let g:LanguageClient_serverCommands = {
     \ 'html' : ['/usr/lib/node_modules/vscode-html-languageserver-bin/htmlServerMain.js','--stdio'],
     \ 'go' : ['/home/francis/Go/bin/gopls','-mode','-stdio'],
     \ 'css' : ['/usr/lib/node_modules/vscode-css-languageserver-bin/cssServerMain.js','--stdio'],
-    \ 'cpp': ['/usr/bin/cquery', '--log-file=/tmp/cq.log'],
-    \ 'c': ['/usr/bin/cquery', '--log-file=/tmp/cq.log'],
+    \ 'cpp': ['/usr/bin/ccls', '--log-file=/tmp/ccls.log'],
+    \ 'c': ['/usr/bin/ccls', '--log-file=/tmp/ccls.log'],
     \ 'json' : ['/usr/lib/node_modules/vscode-json-languageserver-bin/jsonServerMain.js','--stdio'],
     \ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
 \}
@@ -411,6 +410,7 @@ nnoremap <Leader>o :set nopaste<CR>
 set background=dark
 " Colorscheme
 colorscheme srcery
+let g:srcery_transparent_background = 0
 
 " Spelling color
 highlight SpellBad cterm=underline ctermbg=130
@@ -427,29 +427,36 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+" NERDtree
+autocmd vimenter * NERDTree
+map <C-f> :NERDTreeToggle<CR>
+
 " Vimtex
 let g:tex_flavor='latex'
+let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=2
-set conceallevel=1
+set conceallevel=2
 let g:tex_conceal='abdmg'
-let g:tex_fast='r'
+"let g:tex_fast='r'
 let g:vimtex_quickfix_autoclose_after_keystrokes=5
 let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_toc_enabled=1
 let g:vimtex_toc_todo_keywords=['TODO', 'FIXME']
 let g:vimtex_fold_enabled=1
+autocmd Filetype tex setl updatetime=1
 " Snippets
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
+
 set rtp+=./
 
 " c-j c-k for moving in snippet
 let g:UltiSnipsExpandTrigger		= "<tab>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsJumpForwardTrigger	= "<tab>"
+let g:UltiSnipsJumpBackwardTrigger	= "<s-tab>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 " NCM2 with latex
 au Filetype tex call ncm2#register_source({
