@@ -1,76 +1,35 @@
 " Plugins
-" => vim-plug
-"''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-call plug#begin('~/.vim/plugged')
-" Automatically install missing plugins on startup
-if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
-  autocmd VimEnter * PlugInstall | q
+" Dein
+if &compatible
+  set nocompatible
+endif
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+
+let $CONFIG = empty($XDG_CONFIG_HOME) ? expand('$HOME/.config') : $XDG_CONFIG_HOME
+
+if dein#load_state('~/.vim/dein')
+  call dein#begin('~/.vim/dein')
+
+  let s:toml_dir = expand('$CONFIG/dein')
+  call dein#load_toml(s:toml_dir . '/plugins.toml', {'lazy': 0})
+
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('roxma/nvim-yarp')
+
+  "call dein#add('Shougo/deoplete.nvim')
+  "if !has('nvim')
+  "  call dein#add('roxma/nvim-yarp')
+  "  call dein#add('roxma/vim-hug-neovim-rpc')
+  "endif
+  "let g:deoplete#enable_at_startup = 1
+
+  call dein#end()
+  call dein#save_state()
 endif
 
-" IDE
-Plug 'justinmk/vim-dirvish'
-Plug 'kristijanhusak/vim-dirvish-git'
-Plug 'jwilm/i3-vim-focus'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'sirver/ultisnips'
-Plug 'ervandew/supertab'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'Yggdroot/indentLine'
-Plug 'benmills/vimux'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-vinegar'
-Plug 'scrooloose/nerdtree'
-""if has('nvim')
-""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-""else
-""  Plug 'Shougo/deoplete.nvim'
-""  Plug 'roxma/nvim-yarp'
-""  Plug 'roxma/vim-hug-neovim-rpc'
-""endif
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-"
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-ultisnips'
-
-"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-""
-Plug 'roxma/nvim-yarp'
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-
-" Helpers
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'jiangmiao/auto-pairs'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'w0rp/ale'
-
-" Theme
-Plug 'vim-airline/vim-airline'
-Plug 'srcery-colors/srcery-vim'
-
-" Languages
-Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'benmills/vimux-golang'
-Plug 'buoto/gotests-vim',{'for':['go']}
-Plug 'rust-lang/rust.vim',{'for':['rs']}
-Plug 'davidhalter/jedi-vim', { 'for':'python'}
-Plug 'pangloss/vim-javascript',{ 'for' : ['js']}
-Plug 'elzr/vim-json',{ 'for' : ['json']}
-Plug 'othree/html5.vim', { 'for':['html','htm'] }
-Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
-Plug 'ledger/vim-ledger',{'for':['journal']}
-Plug 'lervag/vimtex',{'for':['latex','tex']}
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
-Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
-call plug#end()
+filetype plugin indent on
+syntax enable
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -270,10 +229,10 @@ inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 " Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+"map <leader>sn ]s
+"map <leader>sp [s
+"map <leader>sa zg
+"map <leader>s? z=
 
 " Plugins config
 " VIMUX
@@ -308,7 +267,6 @@ let g:LanguageClient_serverCommands = {
 \}
 nnoremap <F7> :call LanguageClient_contextMenu()<CR>
 noremap <leader>rn :call LanguageClient#textDocument_rename()<CR>
-call ncm2#override_source('LanguageClient_python', {'enable': 1})
 
 let g:multi_cursor_use_default_mapping=0
 " Default mapping
@@ -428,7 +386,7 @@ if has("autocmd")
 endif
 
 " NERDtree
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 map <C-f> :NERDTreeToggle<CR>
 
 " Vimtex
@@ -445,11 +403,6 @@ let g:vimtex_toc_enabled=1
 let g:vimtex_toc_todo_keywords=['TODO', 'FIXME']
 let g:vimtex_fold_enabled=1
 autocmd Filetype tex setl updatetime=1
-" Snippets
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
 
 set rtp+=./
 
