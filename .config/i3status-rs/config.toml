@@ -11,12 +11,6 @@ bat_charging = " |^| "
 bat_discharging = " |v| "
 
 [[block]]
-block = "custom"
-command = "i3-gnome-pomodoro status"
-on_click = "i3-gnome-pomodoro toggle"
-interval = 1
-
-[[block]]
 block = "music"
 player = "spotify"
 buttons = ["play", "next"]
@@ -38,11 +32,11 @@ interval = 5
 
 [[block]]
 block = "disk_space"
-path = "/"
-alias = "/ "
+path = "/home"
+alias = "HOME"
 info_type = "available"
 unit = "GB"
-interval = 20
+interval = 600
 warning = 20.0
 alert = 10.0
 
@@ -51,20 +45,16 @@ block = "memory"
 display_type = "memory"
 format_mem = "{Mup}%"
 format_swap = "{SUp}%"
-interval = 5
-
-[[block]]
-block = "cpu"
-interval = 5
+interval = 30
 
 [[block]]
 block = "load"
-interval = 10
-format = "{1m} {5m}"
+interval = 300
+format = "{5m} {15m}"
 
 [[block]]
 block = "battery"
-interval = 10
+interval = 30
 format = "{percentage}%"
 
 [[block]]

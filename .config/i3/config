@@ -183,7 +183,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 				font pango:DejaVu Sans Mono, FontAwesome 9
-        status_command /usr/bin/i3status-rs ~/.config/i3status-rs/config.toml
+        status_command /home/francis/.local/bin/i3status-rs ~/.config/i3status-rs/config.toml
         position top
         mode hide
         hidden_state hide
@@ -193,12 +193,11 @@ bar {
 set $locker /usr/bin/i3lock -c 000000
 
 #System menu
-set $mode_system System (l)lock,(e)logout,(s)freeze,(r)reboot,(h)susp to disk,(Shift+s)shutdown
+set $mode_system System (l)lock,(e)logout,(s)freeze,(r)reboot,(Shift+s)shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym l exec --no-startup-id $locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym s exec --no-startup-id $locker && systemctl suspend, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
@@ -242,11 +241,13 @@ bindsym --release $mod+p exec rofi-pass
 exec --no-startup-id redshift
 exec --no-startup-id dunst
 exec --no-startup-id udiskie -2At
+exec --no-startup-id spotifyd
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
-exec --no-startup-id exec compton
-exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
+exec --no-startup-id compton
+#exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
+exec --no-startup-id unclutter -b
 
 # Reload monitor config
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
@@ -255,7 +256,7 @@ bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.
 bindsym Mod1+l exec $locker
 
 # Autolocker
-#exec_always --no-startup-id xautolock
+exec --no-startup-id xautolock -time 2 -locker $locker
 
 # Volume control
 bindsym XF86AudioLowerVolume exec pulsemixer --change-volume -2
@@ -263,9 +264,6 @@ bindsym XF86AudioRaiseVolume exec pulsemixer --change-volume +2
 bindsym XF86AudioMute exec pulsemixer --toggle-mute
 
 # Media control
-bindsym Shift+XF86AudioPlay exec mpc toggle # Mopidy bindings
-bindsym Shift+XF86AudioNext exec mpc next
-bindsym Shift+XF86AudioPrev exec mpc prev
 bindsym XF86AudioPlay exec playerctl play-pause # Spotify bindings
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
@@ -303,14 +301,14 @@ workspace_auto_back_and_forth yes
 #exec --no-startup-id vivaldi-snapshot
 exec --no-startup-id qutebrowser
 #exec --no-startup-id slack
-#exec --no-startup-id rambox
+exec --no-startup-id hamsket
 #exec --no-startup-id telegram-desktop
-#exec --no-startup-id thunderbird
+exec --no-startup-id thunderbird
 #exec --no-startup-id mailspring
 #exec --no-startup-id spotify
 
 # Asign programs to workspaces
-assign [class="Rambox"] $workspace2
+assign [class="Hamsket"] $workspace2
 assign [class="Slack"] $workspace2
 assign [class="Telegram"] $workspace2
 assign [class="Thunderbird"] $workspace3
