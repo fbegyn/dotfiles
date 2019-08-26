@@ -1,12 +1,13 @@
 # Personal config files for bash
+source ~/.config/aliases.sh
+source ~/.config/exports.sh
+source ~/.config/functions.sh
 # Liquidpromt
 #source ~/.config/liquidprompt/liquidprompt
 #[[ $- = *i*  ]] && source ~/.config/liquidprompt/liquidprompt
 # Quick moving around directories
 . $HOME/.config/z.sh
-
 . $HOME/.config/zsh/zsh_plugins.sh
-
 . $HOME/.config/zsh/fzf-keybindings.zsh
 # Git autocompletions
 autoload -Uz compinit
