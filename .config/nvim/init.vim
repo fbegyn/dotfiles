@@ -21,21 +21,17 @@ Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree'
-""if has('nvim')
-""  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-""else
-""  Plug 'Shougo/deoplete.nvim'
-""  Plug 'roxma/nvim-yarp'
-""  Plug 'roxma/vim-hug-neovim-rpc'
-""endif
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'tpope/vim-commentary'
+
 "
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-jedi', {'for':['python']}
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-pyclang'
 
 "Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 ""
@@ -61,14 +57,14 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'benmills/vimux-golang'
 Plug 'buoto/gotests-vim',{'for':['go']}
 Plug 'rust-lang/rust.vim',{'for':['rs']}
-Plug 'davidhalter/jedi-vim', { 'for':'python'}
+Plug 'davidhalter/jedi-vim', { 'for':['python']}
 Plug 'pangloss/vim-javascript',{ 'for' : ['js']}
 Plug 'elzr/vim-json',{ 'for' : ['json']}
 Plug 'othree/html5.vim', { 'for':['html','htm'] }
 Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 Plug 'ledger/vim-ledger',{'for':['journal']}
 Plug 'lervag/vimtex',{'for':['latex','tex']}
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 call plug#end()
 
@@ -428,8 +424,8 @@ if has("autocmd")
 endif
 
 " NERDtree
-autocmd vimenter * NERDTree
-map <C-f> :NERDTreeToggle<CR>
+" autocmd vimenter * NERDTree
+map <C-t> :NERDTreeToggle<CR>
 
 " Vimtex
 let g:tex_flavor='latex'
@@ -449,6 +445,16 @@ autocmd Filetype tex setl updatetime=1
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" jedi-vim + ncm2-jedi
+" Disable Jedi-vim autocompletion and enable call-signatures options
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
 
 
 set rtp+=./
