@@ -9,7 +9,9 @@
 xwayland enable
 
 # set wallpaper
-output "*" background ~/Pictures/Wallpapers/esc18-foh.jpg fill
+output "*" background ~/Pictures/Wallpapers/star-map.jpg fill
+output "eDP-1"" pos 0 1080 res 1920x1080
+output "DP-*" pos 0 0
 
 # configure output
 input 1:1:AT_Translated_Set_2_keyboard {
@@ -170,26 +172,26 @@ bindsym $mod+Shift+r reload
 # resize window (you can also use the mouse for that)
 set $size_step 2 px or 2 ppt
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width $size_step
-        bindsym k resize grow height $size_step
-        bindsym j resize shrink height $size_step
-        bindsym l resize grow width $size_step
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym h resize shrink width $size_step
+    bindsym k resize grow height $size_step
+    bindsym j resize shrink height $size_step
+    bindsym l resize grow width $size_step
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width $size_step
-        bindsym Down resize grow height $size_step
-        bindsym Up resize shrink height $size_step
-        bindsym Right resize grow width $size_step
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width $size_step
+    bindsym Down resize grow height $size_step
+    bindsym Up resize shrink height $size_step
+    bindsym Right resize grow width $size_step
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -199,7 +201,7 @@ bindsym $mod+r mode "resize"
 exec_always ~/.config/waybar/waybar.sh
 
 # Set the locker variable
-set $locker /usr/bin/swaylock -c 000000 --clock
+set $locker /usr/bin/swaylock -c 000000
 
 #System menu
 set $mode_system System (l)lock,(e)logout,(s)suspend,(r)reboot,(Shift+s)shutdown
@@ -267,13 +269,13 @@ bindsym $mod+p exec rofi-pass
 exec --no-startup-id redshift
 exec --no-startup-id mako
 exec udiskie -2At
-exec_always --no-startup-id ~/.fehbg
+#exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
 #exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
 
 # Reload monitor config
-bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/dockmode.sh
+bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
 
 # Screen lock
 bindsym Mod1+l exec $locker
@@ -303,10 +305,6 @@ bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
 # Bind wifi switching script
 bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 
-# Terminal scratchpad
-#exec $terminal --class 'terminalscratchpad' -t 'terminalscratchpad' -e '/usr/bin/zsh'
-#for_window [instance="terminalscratchpad"] move scratchpad, border 1pixel
-#bindsym $mod+Shift+Return scratchpad show
 
 # ncmpcpp scratchpad
 #for_window [instance="mpdscratchpad"] move to scratchpad, border 1pixel
@@ -329,13 +327,13 @@ workspace_auto_back_and_forth yes
 #exec --no-startup-id vivaldi-snapshot
 exec --no-startup-id qutebrowser
 #exec --no-startup-id slack
-exec --no-startup-id rambox
+exec --no-startup-id hamsket
 #exec --no-startup-id telegram-desktop
 exec --no-startup-id thunderbird
 #exec --no-startup-id spotify
 
 # Asign programs to workspaces
-assign [class="Rambox"] $workspace2
+assign [class="Hamsket"] $workspace2
 assign [class="Slack"] $workspace2
 assign [class="Telegram"] $workspace2
 assign [class="Thunderbird"] $workspace3
@@ -355,10 +353,15 @@ for_window [app_id="Bluetooth-cli"] floating enable
 
 for_window [app_id="mpv"] inhibit_idle visible
 
+# Terminal scratchpad
+for_window [app_id="terminal"] move scratchpad, border 1pixel
+bindsym $mod+Shift+Return [app_id="terminal"] scratchpad show
+exec $terminal --class 'terminal' -t 'terminal_scratch'
+
 # Volume scratchpad
-#for_window [instance="volume"] move to scratchpad, border 1pixel
-#bindsym mod4+Shift+v [instance="volume"] scratchpad show
-#exec $terminal --class 'volume' -t volume_scratchpad -e pulsemixer
+for_window [app_id="volume"] move to scratchpad, border 1pixel
+bindsym mod4+Shift+v [app_id="volume"] scratchpad show
+exec $terminal --class 'volume' -t volume_scratch -e pulsemixer
 
 # irssi scratchpad
 #for_window [instance="irssi"] move to scratchpad, border 1pixel
