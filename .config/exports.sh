@@ -38,7 +38,7 @@ export UGENT='/home/francis/Documents/Ugent/2018-2019'
 # PATH expansions
 export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$HOME/Scripts:$PATH"
 
-export ANSIBLE_ROLES_PATH="/home/francis/Documents/Events/FoM/ansible-fom:/home/francis/Documents/Events/FoM/ansible-lanparty"
+export ANSIBLE_ROLES_PATH="/home/francis/Documents/Projects/FoM/ansible:/home/francis/Documents/Projects/FoM/ansible-lanparty"
 
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 

@@ -36,17 +36,17 @@ ms (){
 }
 
 notes() {
-  FILE="/home/francis/Documents/Notes/$(date "+%y-%m-%d").md"
+  FILE="/home/francis/Documents/Notes/Daily/$(date "+%y-%m-%d").md"
   CMD=':silent read !date "+\%n**\%H:\%M** "'
 
   vim -c '$' -c "execute '$CMD' | $ | execute 'norm $' | " -c ":Goyo" "$FILE"
 }
 
 note() {
-  FILE="/home/francis/Documents/Notes/$(date "+%y-%m-%d").md"
+  FILE="/home/francis/Documents/Notes/$1.md"
   CMD=':silent read !date "+\%n**\%H:\%M** "'
 
-  vim -c '$' -c "execute '$CMD' | $ | execute 'norm $' | " -c ":Goyo" "$FILE"
+  vim -c '$' -c ":Goyo" "$FILE"
 }
 
 tohoek(){

@@ -89,3 +89,9 @@ alias skoupload='onedrive --synchronize --sync-shared-folders --upload-only'
 
 # Thesis things
 alias thesis='tmuxp load $TMUXP_HOME/thesis.yaml'
+
+__bcc() {
+    clang -fno-stack-protector -g -O2 -emit-llvm -c $1 -o - | \
+        llc -march=bpf -filetype=obj -o "`basename $1 .c`.o"
+}
+alias bcc=__bcc
