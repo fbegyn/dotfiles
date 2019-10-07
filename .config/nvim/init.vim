@@ -120,13 +120,6 @@ set shortmess+=c
 filetype plugin on
 filetype indent on
 
-" Some key rebindings
-" Block mode is more usefull then visual
-nnoremap   v   <C-V>
-nnoremap <C-V>     v
-vnoremap    v   <C-V>
-vnoremap <C-V>     v
-
 " Number sytem for c-a and c-x incrementation/decrementation
 set nrformats-=octal
 
