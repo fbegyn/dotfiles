@@ -86,6 +86,8 @@ alias skosync='onedrive --synchronize --sync-shared-folders'
 alias skodownload='onedrive --synchronize --sync-shared-folders --download-only'
 alias skoupload='onedrive --synchronize --sync-shared-folders --upload-only'
 
+#kdeconnect
+alias kdeconnect='swaymsg "exec --no-startup-id /usr/lib/kdeconnectd"'
 
 # Thesis things
 alias thesis='tmuxp load $TMUXP_HOME/thesis.yaml'
