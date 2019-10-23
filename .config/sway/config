@@ -65,8 +65,8 @@ floating_modifier $mod
 set $terminal /usr/bin/alacritty
 
 # start a terminal
-bindsym $mod+Return exec $terminal -e tmux new-session -A -s main
-#bindsym $mod+Shift+Return exec $terminal
+bindsym $mod+Return exec $terminal
+#bindsym $mod+Shift+Return exec $terminal -e tmux new-session -A -s main
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -273,6 +273,7 @@ exec udiskie -2At
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
 #exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
+#exec --no-startup-id /usr/lib/kdeconnectd
 
 # Reload monitor config
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
