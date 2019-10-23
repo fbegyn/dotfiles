@@ -125,10 +125,8 @@ set nrformats-=octal
 
 " Rounds to indent to multiples of shiftwidth
 set shiftround
-set shiftwidth=4
-set tabstop=4
-" Use spaces instead of tabs
-set expandtab
+set tabstop=2
+set shiftwidth=0
 
 " timeout for combination of keys before considered sime key strokes
 set ttimeout
