@@ -8,8 +8,6 @@ if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
 endif
 
 " IDE
-Plug 'justinmk/vim-dirvish'
-Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'jwilm/i3-vim-focus'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -19,12 +17,10 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/indentLine'
 Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-Plug 'tpope/vim-commentary'
 
-"
+" Autocompletion engine
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
@@ -33,11 +29,8 @@ Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-pyclang'
 
-"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-""
+" Misc
 Plug 'roxma/nvim-yarp'
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
@@ -50,6 +43,7 @@ Plug 'w0rp/ale'
 " Theme
 Plug 'vim-airline/vim-airline'
 Plug 'srcery-colors/srcery-vim'
+Plug 'hashivim/vim-terraform'
 
 " Languages
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
@@ -66,6 +60,9 @@ Plug 'ledger/vim-ledger',{'for':['journal']}
 Plug 'lervag/vimtex',{'for':['latex','tex']}
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
+Plug 'pearofducks/ansible-vim', {'for':['ansible']}
+Plug 'thanethomson/vim-jenkinsfile',{'for':['jenkins']}
+Plug 'tpope/vim-commentary', {'for':['tf','terraform','tfvars','tfstate']}
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
@@ -127,6 +124,7 @@ set nrformats-=octal
 set shiftround
 set tabstop=2
 set shiftwidth=0
+set expandtab
 
 " timeout for combination of keys before considered sime key strokes
 set ttimeout
@@ -446,7 +444,6 @@ let g:jedi#smart_auto_mappings = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#completions_command = ""
 let g:jedi#show_call_signatures = "1"
-
 
 set rtp+=./
 

@@ -15,6 +15,8 @@ export WINIT_HIDPI_FACTOR=1.0
 # home for python virtualenvs
 export WORKON_HOME=~/.virtualenvs
 
+export XDG_CURRENT_DESKTOP=Unity
+
 # Faster zsh vi mode
 export KEYTIMEOUT=2
 

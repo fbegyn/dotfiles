@@ -8,3 +8,5 @@ Tarrasch/zsh-autoenv
 
 mafredri/zsh-async
 sindresorhus/pure
+
+jonmosco/kube-ps1

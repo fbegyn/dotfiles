@@ -130,12 +130,13 @@ c.url.start_pages = 'https://wttr.in'
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # Type: QtColor
-c.colors.webpage.bg = 'white'
+c.colors.webpage.bg = 'grey'
 
 # Bindings for normal mode
 config.bind(',n', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/css/solarized-dark-all-sites.css ""')
 config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh queue "{hint-url}"')
 config.bind('<Ctrl+Shift+r>', 'spawn --userscript readability')
+config.bind('<Ctrl+Shift+b>', 'spawn --userscript getbib')
 config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
 config.bind('C', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh single "{hint-url}"')
 config.bind('Y', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
