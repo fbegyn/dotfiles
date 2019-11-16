@@ -53,3 +53,5 @@ export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2019.journal
 
 # Tmux sessions home
 export TMUXP_HOME=/home/francis/.config/tmuxp
+
+export MAILDIR=$HOME/.mail
