@@ -18,6 +18,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-commentary'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 
 " Autocompletion engine
@@ -62,7 +63,6 @@ Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 Plug 'pearofducks/ansible-vim', {'for':['ansible']}
 Plug 'thanethomson/vim-jenkinsfile',{'for':['jenkins']}
-Plug 'tpope/vim-commentary', {'for':['tf','terraform','tfvars','tfstate']}
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
