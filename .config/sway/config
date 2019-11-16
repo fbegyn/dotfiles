@@ -86,8 +86,8 @@ set $terminal /usr/bin/alacritty
     bindsym $mod+Shift+l move right
 
     # split the window
-    #bindsym $mod+b splith
-    #bindsym $mod+v splitv
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
 
     # change container layout (stacked, tabbed, toggle split)
     bindsym $mod+e layout toggle split
@@ -218,12 +218,12 @@ bindswitch lid:on output $laptop_display disable
 bindswitch lid:off output $laptop_display enable; exec $locker
 
 # Screenshot menu
-set $screen_grab s/f imgur, Shift+s/f local, Alt+s/f clip
+set $screen_grab s/f clipboard, Shift+s/f local, Alt+s/f Imgur
 mode "$screen_grab" {
-    bindsym s exec 'grim -g "$(slurp)" - | wl-copy', mode "default"
-    bindsym Shift+s exec 'grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
-    bindsym Mod1+s exec 'grim -g "$(slurp)" - | ~/Scripts/imgur.sh', mode "default"
-    bindsym f exec 'grim - | wl-copy', mode "default"
+    bindsym s exec 'grim -g "$(slurp -d)" - | wl-copy -t image/png', mode "default"
+    bindsym Shift+s exec 'grim -g "$(slurp -d)" ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
+    bindsym Mod1+s exec 'grim -g "$(slurp -d)" - | ~/Scripts/imgur.sh', mode "default"
+    bindsym f exec 'grim - | wl-copy -t image/png', mode "default"
     bindsym Shift+f exec 'grim ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
     bindsym Mod1+f exec 'grim - | ~/Scripts/imgur.sh', mode "default"
     bindsym m exec 'wf-recorder -g "$(slurp)"', mode "default"
@@ -310,7 +310,7 @@ exec --no-startup-id qutebrowser
 #exec --no-startup-id slack
 exec --no-startup-id hamsket
 #exec --no-startup-id telegram-desktop
-exec --no-startup-id thunderbird
+#exec --no-startup-id thunderbird
 #exec --no-startup-id spotify
 
 # Asign programs to workspaces
