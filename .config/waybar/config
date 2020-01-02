@@ -33,7 +33,7 @@
         "tooltip": false
     },
     "custom/bluetooth" : {
-        "format" : "ᛒ",
+        "format" : "",
         "on-click": "alacritty --class Bluetooth-cli -t Bluetooth-cli -e bluetoothctl"
     },
     "network": {
@@ -44,9 +44,9 @@
         "format-alt": "{ipaddr}/{cidr} {icon}",
         "format-alt-click": "click-right",
         "format-icons": {
-            "wifi": ["☓", "📶" ,"📶"],
-            "ethernet": ["🔌"],
-            "disconnected": ["☓"]
+            "wifi": ["睊", "📶" ,""],
+            "ethernet": [""],
+            "disconnected": [""]
         },
         "on-click": "alacritty --class Nmtui -t Nmtui -e /home/francis/Scripts/nmtui-prescan.sh",
         "tooltip": false
@@ -69,7 +69,8 @@
         "return-type": "json",
         "exec": "~/.config/waybar/modules/spotify.sh",
         "exec-if": "pgrep spotify",
-        "escape": true
+        "escape": true,
+        "on-click": "playerctl --player=spotify play-pause"
     },
     "custom/storage": {
         "format": "{} ",
