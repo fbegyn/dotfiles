@@ -1,10 +1,10 @@
 # general
 auto-reload yes
-max-items 50
 reload-time 30
+max-items 50
 
-# alternative browsers
-macro m set browser "/usr/local/bin/mpv %u"; open-in-browser ; set browser "/usr/bin/qutebrowser %u"
+# Marcos
+macro m set browser "/usr//bin/mpv %u"; open-in-browser ; set browser "/usr/bin/qutebrowser %u"
 macro t set browser "/usr/bin/w3m %u"; open-in-browser ; set browser "/usr/bin/qutebrowser %u"
 
 # unbind defaults
@@ -29,12 +29,10 @@ highlight article "^(Title):.*$" blue default
 highlight article "https?://[^ ]+" red default
 highlight article "\\[image\\ [0-9]+\\]" green default
 
-# interface colors {{{
-
+# interface colors
 color info              color15 color8  bold
 color listfocus         color10 color8
 color listfocus_unread  color9  color8
 color listnormal        color7  default
 color listnormal_unread color15 default
 
-# }}}
