@@ -203,3 +203,54 @@ stopwatch(){
 		sleep 0.1
 	done
 }
+
+
+# remove specified host from ~/Scripts/Files/hostfiles/custom
+function removehost() {
+    if [[ "$1" ]]
+    then
+        HOSTNAME=$1
+
+        if [ -n "$(grep $HOSTNAME ~/Scripts/Files/hostfiles/custom)" ]
+        then
+            echo "$HOSTNAME Found in your ~/Scripts/Files/hostfiles/custom, Removing now...";
+            sed -i".bak" "/$HOSTNAME/d" ~/Scripts/Files/hostfiles/custom
+        else
+            echo "$HOSTNAME was not found in your ~/Scripts/Files/hostfiles/custom";
+        fi
+    else
+        echo "Error: missing required parameters."
+        echo "Usage: "
+        echo "  removehost domain"
+    fi
+}
+
+#add new ip host pair to ~/Scripts/Files/hostfiles/custom
+function addhost() {
+    if [[ "$1" && "$2" ]]
+    then
+        IP=$1
+        HOSTNAME=$2
+
+        if [ -n "$(grep $HOSTNAME ~/Scripts/Files/hostfiles/custom)" ]
+            then
+                echo "$HOSTNAME already exists:";
+                echo $(grep $HOSTNAME ~/Scripts/Files/hostfiles/custom);
+            else
+                echo "Adding $HOSTNAME to your ~/Scripts/Files/hostfiles/custom";
+                printf "%s\t%s\n" "$IP" "$HOSTNAME" | tee -a ~/Scripts/Files/hostfiles/custom > /dev/null;
+
+                if [ -n "$(grep $HOSTNAME ~/Scripts/Files/hostfiles/custom)" ]
+                    then
+                        echo "$HOSTNAME was added succesfully:";
+                        echo $(grep $HOSTNAME ~/Scripts/Files/hostfiles/custom);
+                    else
+                        echo "Failed to Add $HOSTNAME, Try again!";
+                fi
+        fi
+    else
+        echo "Error: missing required parameters."
+        echo "Usage: "
+        echo "  addhost ip domain"
+    fi
+}
