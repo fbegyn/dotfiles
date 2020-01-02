@@ -8,6 +8,8 @@ output "*" background ~/Pictures/Wallpapers/star-map.jpg fill
 set $laptop_display eDP-1
 output $laptop_display pos 0 1080 res 1920x1080
 
+exec xrdb -load ~/.Xresources
+
 # configure inputs
 input 1:1:AT_Translated_Set_2_keyboard {
     xkb_layout us
@@ -63,7 +65,9 @@ set $terminal /usr/bin/alacritty
     bindsym $mod+Shift+q kill
 
     # start dmenu (a program launcher)
-    bindsym $mod+d exec rofi -show drun
+    #bindsym $mod+d exec rofi -show drun
+    bindsym $mod+d exec $terminal --class 'launcher' -t launcher -e ~/Scripts/fzf-launcher.sh
+    for_window [app_id="launcher"] floating enable
     bindsym $mod+Shift+d exec rofi -show run
     bindsym $mod+a exec rofi -show window
 
@@ -180,6 +184,11 @@ mode "resize" {
 # Status bar:
 #
 exec_always ~/.config/waybar/waybar.sh
+#bar {
+#				font pango:DejaVu Sans Mono, FontAwesome 9
+#        status_command /home/francis/.local/bin/i3status-rs ~/.config/i3status-rs/config.toml
+#        position top
+#}
 
 # Set the locker variable
 set $locker /usr/bin/swaylock -c 000000
@@ -204,21 +213,21 @@ bindsym $mod+Pause mode "$mode_system"
 
 # idle config
 # Idle configuration
-exec swayidle \
-    timeout 60 'exec $locker' \
+exec swayidle -w \
+    timeout 60 'exec $locker -f' \
     timeout 360 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
     timeout 1800 'systemctl suspend' \
-    before-sleep 'exec $locker' \
+    before-sleep 'exec $locker -f' \
     after-resume 'swaymsg "output * dpms on"'
 
 # disable laptop output on lid close
 # enabling this, then I should disabl the logind handlers
-bindswitch lid:on output $laptop_display disable
-bindswitch lid:off output $laptop_display enable; exec $locker
+bindswitch --reload lid:on output $laptop_display disable
+bindswitch --reload lid:off output $laptop_display enable
 
 # Screenshot menu
-set $screen_grab s/f clipboard, Shift+s/f local, Alt+s/f Imgur
+set $screen_grab s/f clipboard, Shift+s/f local, Alt+s/f Imgur, m recorder
 mode "$screen_grab" {
     bindsym s exec 'grim -g "$(slurp -d)" - | wl-copy -t image/png', mode "default"
     bindsym Shift+s exec 'grim -g "$(slurp -d)" ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
@@ -226,7 +235,7 @@ mode "$screen_grab" {
     bindsym f exec 'grim - | wl-copy -t image/png', mode "default"
     bindsym Shift+f exec 'grim ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
     bindsym Mod1+f exec 'grim - | ~/Scripts/imgur.sh', mode "default"
-    bindsym m exec 'wf-recorder -g "$(slurp)"', mode "default"
+    bindsym m exec 'wf-recorder -g $(slurp -d) -f ~/Videos/Captures/$(date +%Y-%m-%d-%H:%M:%S).mp4', mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -246,14 +255,10 @@ for_window [title="yt-player"] floating_minimum_size 320x200; floating_maximum_s
 bindsym $mod+p exec rofi-pass
 
 # Execute and startup some fun programs
-exec --no-startup-id redshift
 exec --no-startup-id mako
 exec udiskie -2At
-#exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id xset b off
 exec --no-startup-id libinput-gestures-setup start
-#exec --no-startup-id wpa_cli -i wlp58s0 -a /home/francis/Scripts/wpa_connection.sh
-#exec --no-startup-id /usr/lib/kdeconnectd
 
 # Reload monitor config
 bindsym $mod+Shift+m exec --no-startup-id /home/francis/Scripts/monitor-hotplug.sh
@@ -306,9 +311,8 @@ workspace_auto_back_and_forth yes
 
 # Autostart programs
 #exec --no-startup-id vivaldi-snapshot
-exec --no-startup-id qutebrowser
+exec --no-startup-id qutebrowser --qt-flag ignore-gpu-blacklist --qt-flag enable-gpu-rasterization --qt-flag enable-native-gpu-memory-buffers --qt-flag num-raster-threads=2
 #exec --no-startup-id slack
-exec --no-startup-id hamsket
 #exec --no-startup-id telegram-desktop
 #exec --no-startup-id thunderbird
 #exec --no-startup-id spotify
@@ -316,6 +320,8 @@ exec --no-startup-id hamsket
 # Asign programs to workspaces
 assign [class="Hamsket"] $workspace2
 assign [class="Slack"] $workspace2
+assign [class="Mattermost"] $workspace2
+assign [class="Caprine"] $workspace2
 assign [class="Telegram"] $workspace2
 assign [class="Thunderbird"] $workspace3
 assign [class="Mailspring"] $workspace3
@@ -349,3 +355,8 @@ exec $terminal --class 'volume' -t volume_scratch -e pulsemixer
 for_window [app_id="irc"] move to scratchpad, border 1pixel
 bindsym mod4+Shift+i [app_id="irc"] scratchpad show
 exec $terminal --class 'irc' -t irc_scratchpad
+
+# pomodoro scratchpad
+for_window [app_id="gnome-pomodoro"] move to scratchpad, border 1pixel
+bindsym mod4+Shift+p [app_id="gnome-pomodoro"] scratchpad show
+exec /usr/bin/gnome-pomodoro
