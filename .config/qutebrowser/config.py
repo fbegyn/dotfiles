@@ -99,7 +99,7 @@ c.tabs.width = '7%'
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
 # Type: FuzzyUrl
-c.url.default_page = 'https://nl.todoist.com/app#start'
+c.url.default_page = 'https://pomoday.app/'
 
 # Search engines which can be used via the address bar. Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -111,21 +111,21 @@ c.url.default_page = 'https://nl.todoist.com/app#start'
 # `:open google qutebrowser`.
 # Type: Dict
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
-                       'g': 'https://google.com/search?q={}',
-                       'gmaps': 'https://www.google.be/maps/search/{}+',
                        'aw': 'https://wiki.archlinux.org/?search={}',
-                       'mov': 'https://www.imdb.com/find?q={}&s=all',
+                       'gscholar': 'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q={}',
+                       'g': 'https://google.com/search?q={}',
+                       'gif': 'https://giphy.com/search/{}',
+                       'gmaps': 'https://www.google.be/maps/search/{}+',
                        'maps': 'https://www.openstreetmap.org/search?query={}',
-                       'red': 'https://www.reddit.com/search?q={}',
+                       'mov': 'https://www.imdb.com/find?q={}&s=all',
+                       'r': 'https://www.reddit.com/search?q={}',
                        'word': 'https://www.wordnik.com/words/{}',
                        'woord': 'https://woordenlijst.org/#/?q={}',
-                       'gscholar': 'https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q={}',
-                       'gif': 'https://giphy.com/search/{}'
                        }
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = 'https://wttr.in'
+c.url.start_pages = 'https://pomoday.app/'
 
 # Background color for webpages if unset (or empty to use the theme's
 # color).
@@ -138,6 +138,7 @@ config.bind('<Ctrl+Shift+c>', 'hint links spawn --detach /home/francis/Scripts/y
 config.bind('<Ctrl+Shift+r>', 'spawn --userscript readability')
 config.bind('<Ctrl+Shift+b>', 'spawn --userscript getbib')
 config.bind('<Ctrl+Shift+y>', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{hint-url}"')
+config.bind('<Mod1+Shift+y>', 'spawn --detach /home/francis/Scripts/youtubeplayer.sh queue "{url}"')
 config.bind('C', 'hint links spawn --detach /home/francis/Scripts/youtubecaster.sh single "{hint-url}"')
 config.bind('Y', 'hint links spawn --detach /home/francis/Scripts/youtubeplayer.sh window "{hint-url}"')
 
