@@ -19,7 +19,7 @@ alias painsd='yay -S --asdeps'
 alias pamir='yay -Syy'
 
 alias rm='rm -I'
-alias mv='mv -I'
+alias mv='mv -i'
 
 # Aliases to make ls better
 #alias ls='exa'
@@ -71,3 +71,5 @@ __bcc() {
         llc -march=bpf -filetype=obj -o "`basename $1 .c`.o"
 }
 alias bcc=__bcc
+
+alias screencapture='wf-recorder -g $(slurp -d) -f ~/Videos/Captures/$(date +%Y-%m-%d-%H:%M:%S).mp4'
