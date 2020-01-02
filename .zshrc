@@ -57,8 +57,3 @@ setopt CDABLE_VARS          # Change directory to a path stored in a variable.
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
 unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if [ /usr/bin/kubectl ]; then source <(kubectl completion zsh); fi
-
-#PROMPT='$(kube_ps1)'$PROMPT
