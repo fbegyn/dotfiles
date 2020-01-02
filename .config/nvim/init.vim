@@ -17,6 +17,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/indentLine'
 Plug 'benmills/vimux'
 Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
@@ -38,20 +39,20 @@ Plug 'junegunn/limelight.vim'
 " Helpers
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'w0rp/ale'
 
 " Theme
 Plug 'vim-airline/vim-airline'
 Plug 'srcery-colors/srcery-vim'
-Plug 'hashivim/vim-terraform'
 
 " Languages
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'benmills/vimux-golang'
 Plug 'buoto/gotests-vim',{'for':['go']}
-Plug 'rust-lang/rust.vim',{'for':['rs']}
+Plug 'rust-lang/rust.vim',{'for':['rs','rust']}
 Plug 'davidhalter/jedi-vim', { 'for':['python']}
 Plug 'pangloss/vim-javascript',{ 'for' : ['js']}
 Plug 'elzr/vim-json',{ 'for' : ['json']}
@@ -63,6 +64,7 @@ Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 Plug 'pearofducks/ansible-vim', {'for':['ansible']}
 Plug 'thanethomson/vim-jenkinsfile',{'for':['jenkins']}
+Plug 'google/vim-jsonnet'
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
@@ -345,7 +347,10 @@ let g:go_fmt_command = 'goimports'
 let g:go_auto_type = 1
 let g:go_template_autocreate = 0
 let g:go_gocode_unimported_packages = 1
+let g:go_gopls_complete_unimported = 1
 let g:go_bin_path= '/home/francis/Go/bin'
+let g:go_def_mode='/home/francis/Go/bin/gopls'
+let g:go_info_mode='/home/francis/Go/bin/gopls'
 
 augroup golang
   autocmd FileType go nnoremap <leader>gt :GoTest<cr>
@@ -416,11 +421,25 @@ endif
 " autocmd vimenter * NERDTree
 map <C-t> :NERDTreeToggle<CR>
 
+" CtrlP
+nnoremap <leader>tp :CtrlPTag<cr>
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$|log\|tmp$',
+	\ 'file': '\v\.(exe|so|dll|aux|alg|fls|glg)$',
+	\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+	\ }
+
+" Tagbar
+nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+let g:tagbar_ctags_bin = "/home/francis/.local/bin/unctags"
+
 " Vimtex
 let g:tex_flavor='latex'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=2
+let g:vimtex_quickfix_open_on_warning=0
 set conceallevel=2
 let g:tex_conceal='abdmg'
 "let g:tex_fast='r'
