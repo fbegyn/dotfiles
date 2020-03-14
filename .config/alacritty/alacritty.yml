@@ -174,18 +174,20 @@ colors:
     blue:    '0x2C78BF'
     magenta: '0xE02C6D'
     cyan:    '0x0AAEB3'
-    white:   '0x918175'
+    white:   '0xD0BFA1'
+    orange:  '0xD75F00'
 
   # Bright colors
   bright:
-    black:   '0x2D2B28'
+    black:   '0x918175'
     red:     '0xF75341'
     green:   '0x98BC37'
     yellow:  '0xFED06E'
-    blue:    '0x529CE0'
+    blue:    '0x68A8E4'
     magenta: '0xFF5C8F'
     cyan:    '0x53FDE9'
     white:   '0xFCE8C3'
+    orange:  '0xFF8700'
 
 # Visual Bell
 #
@@ -214,7 +216,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 0.999
+background_opacity: 0.91
 
 # Mouse bindings
 #
