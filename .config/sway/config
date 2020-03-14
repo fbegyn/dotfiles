@@ -214,12 +214,13 @@ bindsym $mod+Pause mode "$mode_system"
 # idle config
 # Idle configuration
 exec swayidle -w \
-    timeout 60 'exec $locker -f' \
-    timeout 360 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"' \
-    timeout 1800 'systemctl suspend' \
-    before-sleep 'exec $locker -f' \
-    after-resume 'swaymsg "output * dpms on"'
+timeout 60 'exec $locker -f' \
+timeout 360 'swaymsg "output dpms * off"' \
+        resume 'swaymsg "output dpms * on"' \
+timeout 1800 'systemctl suspend' \
+        resume 'swaymsg "output dpms * on"' \
+before-sleep 'exec $locker -f' \
+after-resume 'swaymsg "output dpms * on"'
 
 # disable laptop output on lid close
 # enabling this, then I should disabl the logind handlers
