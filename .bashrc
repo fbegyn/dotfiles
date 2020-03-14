@@ -12,3 +12,7 @@
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 # Python virtualenv
 #. /usr/bin/virtualenvwrapper.sh
+
+source /home/francis/.config/broot/launcher/bash/br
+
+complete -C /home/francis/Go/bin/tk tk
