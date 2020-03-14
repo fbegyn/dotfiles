@@ -53,7 +53,7 @@ export DEBFULLNAME='Francis Begyn'
 export DEBEMAIL='francis.begyn@gmail.com'
 
 # Ledger files
-export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2019.journal
+export LEDGER_FILE=/home/francis/Documents/Finances/Ledger/2020.journal
 
 # Tmux sessions home
 export TMUXP_HOME=/home/francis/.config/tmuxp
@@ -62,3 +62,4 @@ export MAILDIR=$HOME/.mail
 export MATES_DIR=$HOME/.contacts
 export NOTMUCH_CONFIG=~/.notmuch-config
 
+export AoCCookie=session=53616c7465645f5f96c2c3a9cdb6bcb819dd8d49b4b463cab6acd3d41cf80a7c2768907858cac15ec0606e8fb6e83e4e

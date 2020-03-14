@@ -3,28 +3,27 @@
 source ~/.config/git.sh
 
 # Aliases for yay
-alias paupg='yay -Syu'
-alias pasu='yay -Syu --noconfirm'
-alias pain='yay -S'
-alias pains='yay -U'
-alias pare='yay -R'
-alias parem='yay -Rns'
-alias parep='yay -Si'
-alias pareps='yay -Ss'
-alias paloc='yay -Qi'
-alias palocs='yay -Qs'
-alias palst='yay -Qe'
-alias paorph='yay -Qtd'
-alias painsd='yay -S --asdeps'
-alias pamir='yay -Syy'
+# alias paupg='yay -Syu'
+# alias pasu='yay -Syu --noconfirm'
+# alias pain='yay -S'
+# alias pains='yay -U'
+# alias pare='yay -R'
+# alias parem='yay -Rns'
+# alias parep='yay -Si'
+# alias pareps='yay -Ss'
+# alias paloc='yay -Qi'
+# alias palocs='yay -Qs'
+# alias palst='yay -Qe'
+# alias paorph='yay -Qtd'
+# alias painsd='yay -S --asdeps'
+# alias pamir='yay -Syy'
 
 alias rm='rm -I'
 alias mv='mv -i'
 
 # Aliases to make ls better
-#alias ls='exa'
-#alias ll='exa -l'
-#alias la='exa -a'
+alias exal='exa -la'
+alias exaa='exa -a'
 
 alias weechat='ssh droplet'
 
@@ -58,11 +57,6 @@ alias hoekmusic='ncmpcpp -h 10.0.0.5 -p 6600'
 alias remotesound='pax11publish -e -S'
 alias localsound='pax11publish -e -r'
 
-alias skocheck='onedrive --synchronize --sync-shared-folders --verbose --dry-run'
-alias skosync='onedrive --synchronize --sync-shared-folders'
-alias skodownload='onedrive --synchronize --sync-shared-folders --download-only'
-alias skoupload='onedrive --synchronize --sync-shared-folders --upload-only'
-
 # Thesis things
 alias thesis='tmuxp load $TMUXP_HOME/thesis.yaml'
 
@@ -73,3 +67,6 @@ __bcc() {
 alias bcc=__bcc
 
 alias screencapture='wf-recorder -g $(slurp -d) -f ~/Videos/Captures/$(date +%Y-%m-%d-%H:%M:%S).mp4'
+
+# webcamview
+alias webcam='mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0'

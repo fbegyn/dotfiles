@@ -36,8 +36,8 @@ ms (){
 }
 
 notes() {
-  FILE="/home/francis/Documents/Notes/Daily/$(date "+%y-%m-%d").md"
-  CMD=':silent read !date "+\%n**\%H:\%M** "'
+  FILE="/home/francis/Documents/Notes/notebook.md"
+  CMD=':silent read !date "+\%n**\%Y-\%m-\%d**\%n**\%H:\%M**\%n"'
 
   vim -c '$' -c "execute '$CMD' | $ | execute 'norm $' | " -c ":Goyo" "$FILE"
 }
