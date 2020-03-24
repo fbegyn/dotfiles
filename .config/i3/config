@@ -128,10 +128,12 @@ set $terminal /usr/bin/alacritty
     bindsym Mod1+Shift+k move workspace to output up
     bindsym Mod1+Shift+l move workspace to output left
 
-    # reload the configuration file
-    bindsym $mod+Shift+r reload
-    # exit i3 (logs you out of your X session)
-    bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your sway session.' -b 'Yes, exit sway' 'swaymsg exit'"
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 set $size_step 2 px or 2 ppt
@@ -191,13 +193,12 @@ bindsym $mod+Pause mode "$mode_system"
 # Screenshot menu
 set $screen_grab s/f clipboard, Shift+s/f local, Alt+s/f Imgur, m recorder
 mode "$screen_grab" {
-    bindsym s exec 'grim -g "$(slurp -d)" - | wl-copy -t image/png', mode "default"
-    bindsym Shift+s exec 'grim -g "$(slurp -d)" ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
-    bindsym Mod1+s exec 'grim -g "$(slurp -d)" - | ~/Scripts/imgur.sh', mode "default"
-    bindsym f exec 'grim - | wl-copy -t image/png', mode "default"
-    bindsym Shift+f exec 'grim ~/Pictures/Screenshots/$(date +%F-%T).png', mode "default"
-    bindsym Mod1+f exec 'grim - | ~/Scripts/imgur.sh', mode "default"
-    bindsym m exec 'wf-recorder -g $(slurp -d) -f ~/Videos/Captures/$(date +%Y-%m-%d-%H:%M:%S).mp4', mode "default"
+    bindsym s exec "maim -s | xclip -selection clipboard -t image/png", mode "default"
+    bindsym Shift+s exec "maim -s ~/Pictures/Screenshots/$(date +%F-%T).png", mode "default"
+    bindsym Mod1+s exec "maim -s | ~/Scripts/imgur.sh", mode "default"
+    bindsym f exec "maim | xclip -selection clipboard -t image/png", mode "default"
+    bindsym Shift+f exec "maim ~/Pictures/Screenshots/$(date +%F-%T).png", mode "default"
+    bindsym Mod1+f exec "maim | ~/Scripts/imgur.sh", mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
