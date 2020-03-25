@@ -249,7 +249,6 @@ mode "$screen_grab" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
 bindsym $mod+grave mode "$screen_grab"
 
 # Make the current window stick acroos workspaces
@@ -299,17 +298,6 @@ bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
 # Bind wifi switching script
 bindsym $mod+w exec /home/francis/Scripts/wpa_switcher.sh
 
-
-# ncmpcpp scratchpad
-#for_window [instance="mpdscratchpad"] move to scratchpad, border 1pixel
-#bindsym mod4+Shift+b [instance="mpdscratchpad"] scratchpad show
-#exec $terminal --class 'mpdscratchpad' -t 'mpdscratchpad' -e ncmpcpp
-
-# Ranger scratchpad
-#for_window [instance="file_scratchpad"] move scratchpad, border 1pixel
-#bindsym mod4+Shift+f [instance="file_scratchpad"] scratchpad show
-#bindsym $mod+Shift+f exec $terminal --class 'file_scratchpad' -t file_scratchpad -e ranger
-
 # Autoswitch workspaces
 workspace_auto_back_and_forth yes
 
@@ -339,6 +327,7 @@ assign [class="qutebrowser"] $workspace1
 assign [app_id="Spotify"] $workspace4
 for_window [app_id="Spotify"] move to workspace $workspace4
 
+# Set some apps to be floating
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="Nautilus"] floating enable
 for_window [app_id="blueberry.py"] floating enable
@@ -347,22 +336,23 @@ for_window [app_id="Pulsemixer"] floating enable
 for_window [app_id="Bluetooth-cli"] floating enable
 for_window [app_id="m-connection-editor"] floating enable
 
+# prevent locking when mpv window is open
 for_window [app_id="mpv"] inhibit_idle visible
 
 # Terminal scratchpad
-for_window [app_id="terminal"] move scratchpad, border 1pixel
-bindsym $mod+Shift+Return [app_id="terminal"] scratchpad show
-exec $terminal --class 'terminal' -t 'terminal_scratch'
+# for_window [app_id="terminal"] move scratchpad, border 1pixel
+# bindsym $mod+Shift+Return [app_id="terminal"] scratchpad show
+# exec $terminal --class 'terminal' -t 'terminal_scratch'
 
 # Volume scratchpad
-for_window [app_id="volume"] move to scratchpad, border 1pixel
-bindsym mod4+Shift+v [app_id="volume"] scratchpad show
-exec $terminal --class 'volume' -t volume_scratch -e pulsemixer
+# for_window [app_id="volume"] move to scratchpad, border 1pixel
+# bindsym mod4+Shift+v [app_id="volume"] scratchpad show
+# exec $terminal --class 'volume' -t volume_scratch -e pulsemixer
 
 # irssi scratchpad
-for_window [app_id="irc"] move to scratchpad, border 1pixel
-bindsym mod4+Shift+i [app_id="irc"] scratchpad show
-exec $terminal --class 'irc' -t irc_scratchpad
+# for_window [app_id="irc"] move to scratchpad, border 1pixel
+# bindsym mod4+Shift+i [app_id="irc"] scratchpad show
+# exec $terminal --class 'irc' -t irc_scratchpad
 
 # pomodoro scratchpad
 for_window [app_id="gnome-pomodoro"] move to scratchpad, border 1pixel
