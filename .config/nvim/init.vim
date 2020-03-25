@@ -21,6 +21,7 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 
 " Autocompletion engine
 Plug 'ncm2/ncm2'
@@ -63,8 +64,10 @@ Plug 'lervag/vimtex',{'for':['latex','tex']}
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 Plug 'pearofducks/ansible-vim', {'for':['ansible']}
+"Plug 'rodjek/vim-puppet',{'for':['pp','puppet']}
 Plug 'thanethomson/vim-jenkinsfile',{'for':['jenkins']}
 Plug 'google/vim-jsonnet'
+Plug 'cespare/vim-toml',{'for':['toml']}
 call plug#end()
 
 " With a map leader it's possible to do extra key combinations
@@ -194,6 +197,10 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
 map <c-space> ?
+
+nnoremap <silent> <M-o> :Clap<cr>
+nnoremap <silent> <leader>clf :Clap files<cr>
+
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 " Disabling the arrow keys
@@ -345,12 +352,13 @@ let g:indentLine_color_term = 239
 " => Golang
 let g:go_fmt_command = 'goimports'
 let g:go_auto_type = 1
+let g:go_auto_type_info = 1
 let g:go_template_autocreate = 0
 let g:go_gocode_unimported_packages = 1
 let g:go_gopls_complete_unimported = 1
 let g:go_bin_path= '/home/francis/Go/bin'
 let g:go_def_mode='/home/francis/Go/bin/gopls'
-let g:go_info_mode='/home/francis/Go/bin/gopls'
+let g:go_info_mode='gopls'
 
 augroup golang
   autocmd FileType go nnoremap <leader>gt :GoTest<cr>
