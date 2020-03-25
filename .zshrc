@@ -58,7 +58,7 @@ setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
 unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
 
-source /home/francis/.config/broot/launcher/bash/br
+# source /home/francis/.config/broot/launcher/bash/br
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /home/francis/Go/bin/tk tk

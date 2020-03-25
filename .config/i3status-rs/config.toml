@@ -20,7 +20,7 @@ block = "sound"
 
 [[block]]
 block = "net"
-device = "wlp58s0"
+device = "enp12s0"
 ssid = true
 ip = true
 bitrate = false
@@ -32,8 +32,18 @@ interval = 5
 
 [[block]]
 block = "disk_space"
-path = "/home"
+path = "/home/francis"
 alias = "HOME"
+info_type = "available"
+unit = "GB"
+interval = 600
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "ROOT"
 info_type = "available"
 unit = "GB"
 interval = 600
@@ -51,11 +61,6 @@ interval = 30
 block = "load"
 interval = 300
 format = "{5m} {15m}"
-
-[[block]]
-block = "battery"
-interval = 30
-format = "{percentage}%"
 
 [[block]]
 block = "time"

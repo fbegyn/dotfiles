@@ -16,10 +16,10 @@ export WINIT_HIDPI_FACTOR=1.0
 export WORKON_HOME=~/.virtualenvs
 
 # Wayland settings
-export QT_QPA_PLATFORM=wayland
-export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-export XDG_SESSION_TYPE=wayland
-export MOZ_ENABLE_WAYLAND=1
+#export QT_QPA_PLATFORM=wayland
+#export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+#export XDG_SESSION_TYPE=wayland
+#export MOZ_ENABLE_WAYLAND=1
 
 # Faster zsh vi mode
 export KEYTIMEOUT=2
