@@ -254,3 +254,8 @@ function addhost() {
         echo "  addhost ip domain"
     fi
 }
+
+# Generate random password
+function genpass() {
+  cat /dev/urandom | tr -dc a-zA-Z0-9 | head -c16; echo
+}

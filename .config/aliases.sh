@@ -49,8 +49,6 @@ alias 'ta'='tmux attach -t'
 # vim, but then sudoes
 alias svim='sudo -E nvim'
 
-alias influx='docker run -it influxdb bash'
-
 alias pidfind='ps aux | fzf'
 
 alias hoekmusic='ncmpcpp -h 10.0.0.5 -p 6600'
@@ -70,3 +68,5 @@ alias screencapture='wf-recorder -g $(slurp -d) -f ~/Videos/Captures/$(date +%Y-
 
 # webcamview
 alias webcam='mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0'
+
+alias ctags='unctags'
