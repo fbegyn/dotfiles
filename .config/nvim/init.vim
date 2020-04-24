@@ -50,8 +50,8 @@ Plug 'srcery-colors/srcery-vim'
 
 " Languages
 Plug 'fatih/vim-go', {'for': ['go'], 'do': ':GoInstallBinaries'}
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'benmills/vimux-golang'
+" Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+" Plug 'benmills/vimux-golang'
 Plug 'buoto/gotests-vim',{'for':['go']}
 Plug 'rust-lang/rust.vim',{'for':['rs','rust']}
 Plug 'davidhalter/jedi-vim', { 'for':['python']}
@@ -61,12 +61,10 @@ Plug 'othree/html5.vim', { 'for':['html','htm'] }
 Plug 'suoto/vim-hdl', {'for':['vhdl','hdl']}
 Plug 'ledger/vim-ledger',{'for':['journal']}
 Plug 'lervag/vimtex',{'for':['latex','tex']}
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex']}
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex','latex']}
 Plug 'hashivim/vim-terraform',{'for':['tf', 'terraform']}
 Plug 'pearofducks/ansible-vim', {'for':['ansible']}
-"Plug 'rodjek/vim-puppet',{'for':['pp','puppet']}
-Plug 'thanethomson/vim-jenkinsfile',{'for':['jenkins']}
-Plug 'google/vim-jsonnet'
+Plug 'google/vim-jsonnet',{'for':['jsonnet']}
 Plug 'cespare/vim-toml',{'for':['toml']}
 call plug#end()
 
@@ -74,7 +72,7 @@ call plug#end()
 " like <leader>w saves the current file
 let g:mapleader = ','
 
-let g:python_host_prog = '/usr/bin/python2'
+" Python binaries defining
 let g:python3_host_prog = '/usr/bin/python3'
 
 set history=500
@@ -87,28 +85,30 @@ set ignorecase
 set smartcase
 set magic
 set showmatch
-set nobackup
-set nowritebackup
-set noerrorbells
-set updatetime=250
-set smartindent "Smart indent
-
-" Linebreak on 111 characters
-set textwidth=101
-set colorcolumn=100
+set nobackup            " Do not keep backup files
+set nowritebackup       " Do not keep backup files
+set noerrorbells        " No annoying error bells
+set updatetime=750      " Based on https://github.com/airblade/vim-gitgutter#when-are-the-signs-updated
+set smartindent         " Smart indent
+set colorcolumn=100     " Show column at n characters
+set textwidth=101       " Linebreak at n characters
 set linebreak
 set wrap
 
+" show line numbers
 set number
 set numberwidth=2
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
+" Default split behavior
 set splitright
 set splitbelow
-set mouse=a
 
+set mouse=a
 set fileformat=unix
 set whichwrap+=<,>,h,l
+
+" Default ignore files
 set wildignore+=.*,.git,*.swp,*pyc,*pyo,*.png,*.jpg,*.gif,*.ai,*.jpeg,*.psd,*.jar,*.zip,*.gem,log/**,tmp/**,coverage/**,rdoc/**,output_*,*.xpi,doc/**
 
 " Autcompletion
@@ -128,7 +128,7 @@ set nrformats-=octal
 " Rounds to indent to multiples of shiftwidth
 set shiftround
 set tabstop=2
-set shiftwidth=0
+set shiftwidth=2
 set expandtab
 
 " timeout for combination of keys before considered sime key strokes
@@ -146,16 +146,14 @@ inoremap <C-c> <Esc>
 
 " Set x lines to the cursor - when moving vertically using j/k
 set scrolloff=4
-
 " Height of the command bar
 set cmdheight=2
+" Makes search act like search in modern browsers
+set incsearch
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
-
-" Makes search act like search in modern browsers
-set incsearch
 
 " No annoying sound on errors
 set novisualbell
@@ -173,12 +171,6 @@ let g:netrw_winsize = 12
 syntax on
 " Enable better colors
 set t_Co=256
-" Set extra options when running in GUI mode
-if has('gui_running')
-    set guioptions-=T
-    set guioptions-=e
-    set guitablabel=%M\ %t
-endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
@@ -198,6 +190,7 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 map <space> /
 map <c-space> ?
 
+" Calling rust tools
 nnoremap <silent> <M-o> :Clap<cr>
 nnoremap <silent> <leader>clf :Clap files<cr>
 
@@ -235,9 +228,6 @@ nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 augroup tabLeave
   au TabLeave * let g:lasttab = tabpagenr()
 augroup end
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -259,7 +249,7 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " => Spell checking
-set spelllang=nl,en_gb
+set spelllang=nl_be,en_gb
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
@@ -280,6 +270,7 @@ map <Leader>vi :VimuxInspectRunner<CR>
 " Zoom the tmux runner pane
 map <Leader>vz :VimuxZoomRunner<CR>
 
+" Terraform language settings
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
 
@@ -304,8 +295,8 @@ nnoremap <F7> :call LanguageClient_contextMenu()<CR>
 noremap <leader>rn :call LanguageClient#textDocument_rename()<CR>
 call ncm2#override_source('LanguageClient_python', {'enable': 1})
 
-let g:multi_cursor_use_default_mapping=0
 " Default mapping
+let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
 let g:multi_cursor_start_key           = 'g<C-n>'
@@ -372,6 +363,11 @@ augroup rustfmt
   autocmd FileType rust,rs cnoreabbrev fs :!rustfmt<cr>
 augroup end
 
+" => Markdown
+augroup markdown
+  autocmd FileType markdown,md set virtualedit=all
+augroup end
+
 " javascript
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
@@ -408,7 +404,7 @@ nnoremap <Leader>o :set nopaste<CR>
 set background=dark
 " Colorscheme
 colorscheme srcery
-let g:srcery_transparent_background = 0
+let g:srcery_transparent_background = 1
 
 " Spelling color
 highlight SpellBad cterm=underline ctermbg=130
