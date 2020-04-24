@@ -62,4 +62,4 @@ export MAILDIR=$HOME/.mail
 export MATES_DIR=$HOME/.contacts
 export NOTMUCH_CONFIG=~/.notmuch-config
 
-export AoCCookie=session=53616c7465645f5f96c2c3a9cdb6bcb819dd8d49b4b463cab6acd3d41cf80a7c2768907858cac15ec0606e8fb6e83e4e
+export AoCCookie=""
