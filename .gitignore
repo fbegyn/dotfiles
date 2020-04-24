@@ -1,0 +1,6 @@
+.config/nvim/spell
+.tmux/plugins
+.config/qutebrowser
+.config/zsh/zsh_plugins.sh
+!.config/qutebrowser/config.py
+**.log
