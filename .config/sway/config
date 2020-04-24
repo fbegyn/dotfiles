@@ -2,7 +2,7 @@
 xwayland enable
 
 # set wallpaper
-output "*" background ~/Pictures/Wallpapers/star-map.jpg fill
+output "*" background ~/Pictures/Wallpapers/amid-clouds.jpg fill
 
 # monitor config
 set $laptop_display eDP-1
